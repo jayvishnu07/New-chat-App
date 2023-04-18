@@ -1,0 +1,193 @@
+
+*{
+    box-sizing: border-box;
+    border: 1px solid black;
+    color: black;
+}
+#cursor{
+    cursor: pointer;
+}
+
+.chat-component-header{
+    background-color: chartreuse;
+    height: 7vh;
+    display: flex;
+}
+
+.left-header-features-wrapper{
+    flex: 25%;
+    border-right: 2px solid gray ;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.left-header-features{
+    background-color: rosybrown;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.righ-header-features-wrapper{
+    flex: 75%;
+    display: flex;
+    align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 50px 30px 30px;
+}
+
+.application-name{
+    background-color: yellow;
+}
+
+.setting-and-prfile-feature{
+    width: 10%;
+    background-color: rgb(2, 2, 255);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.chat-body-main-div{
+    background-color: aqua;
+    width: 100%;
+    height: 93vh;
+    display: flex;
+}
+
+.friends-list-main-wrapper{
+    background-color: bisque;
+    flex: 25%;
+}
+
+
+.friends-list-search{
+    height: 5vh;
+    background-color: violet;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-box-wrapper{
+    background-color: aliceblue;
+    height: 80%;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+#search-logo{
+    flex: 10%;
+}
+.search-box-wrapper input{
+    height: 100%;
+    flex: 90%;
+    border: none;
+    outline: none;
+    padding: 0 10px 0 10px;
+}
+
+/* .search-box-wrapper input */
+
+
+.friends-list-div{
+    height: 88vh;
+    width: 100%;
+    background-color: darkolivegreen;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.friends-list-item{
+    background-color: aliceblue;
+    width: 90%;
+    height: 7vh;
+    margin: 20px 0 0 0;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+.chat-box-main-div{
+    background-color: blueviolet;
+    flex: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.fellow-user-details-header{
+    background-color: darkturquoise;
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px 0 30px;
+}
+
+.chat-box-feature-left{
+    background-color: teal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.show-fellow-user-details{
+    background-color: aqua;
+}
+
+.main-chat-box{
+    background-color: brown;
+    flex: 1;
+}
+
+.chat-box-input-wrapper{
+    background-color: steelblue;
+    height: 6vh;
+}
+
+.chat-box-input-box{
+    height: 5vh;
+    display: flex;
+}
+.chat-box-input-box input{
+    flex: 93%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0 20px 0 20px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.send-logo-div{
+    flex: 7%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.chat-box-input-bottom-border{
+    background-color: black;
+    height: 1vh;
+}

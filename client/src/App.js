@@ -3,7 +3,7 @@ import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Home from './Components/Home';
-import Chat from './Components/Chat';
+import Chat from './Components/Chat/Chat';
 import Form from './Components/Form/Form';
 function App() {
   return (

@@ -38,9 +38,3 @@ app.use(errorHandler)
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is Running on ${PORT}`))
 
-
-
-// FE Created forms, Completed Authentication(Registeration and Login) - BE : Created models, password decryption and JWT
-
-
-//  & BE : 
