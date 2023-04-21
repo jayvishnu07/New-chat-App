@@ -2,15 +2,21 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import './Chats.css'
 import { GiMagicHat } from 'react-icons/gi';
-import { BsSearch, BsChatFill } from 'react-icons/bs';
+import { BsSearch, BsFillChatRightTextFill } from 'react-icons/bs';
 import { FaUserFriends } from 'react-icons/fa';
 import { CgProfile } from 'react-icons/cg';
 import { AiFillSetting , AiOutlineSend} from 'react-icons/ai';
 import { MdNotifications } from 'react-icons/md';
+import UserDetailsSidebar from '../UserDetailsSidebar/UserDetailsSidebar';
 
 const Chat = () => {
 
     const [chats, setChats] = useState([])
+    const [showFriendDetail, setShowFriendDetail] = useState(false)
+
+    // const toggleShowDetails=()=>{
+    //     setShowFriendDetail((prev)=>{!prev})
+    // }
 
     return (
         <>
@@ -21,7 +27,7 @@ const Chat = () => {
                     </div>
                     <div className="left-header-features">
                         <FaUserFriends size={25} id='cursor' />
-                        <BsChatFill size={25} id='cursor' />
+                        <BsFillChatRightTextFill size={25} id='cursor' />
                         <MdNotifications size={25} id='cursor' />
                     </div>
                 </div>
@@ -48,23 +54,27 @@ const Chat = () => {
                         <div className="friends-list-item">
                             Jvs
                         </div>
+                        <div className="friends-list-item-bottom-border"></div>
                         <div className="friends-list-item">
                             Jai
                         </div>
+                        <div className="friends-list-item-bottom-border"></div>
                         <div className="friends-list-item">
                             vishnu
                         </div>
+                        <div className="friends-list-item-bottom-border"></div>
 
                     </div>
                 </div>
-                <div className="chat-box-main-div">
+                {/* chat box  */}
+                <div className="chat-box-main-div" style={showFriendDetail ? {width : "50%"} : {width : "75%"}}>
                     <div className="fellow-user-details-header">
                         <div className="chat-box-feature-left">
                             <CgProfile size={30} id='cursor' />
                             Friend's name
                         </div>
                         <div className="show-fellow-user-details">
-                            <AiFillSetting size={30} id='cursor' />
+                            <AiFillSetting size={30} id='cursor' onClick={()=>{setShowFriendDetail((prev)=>!prev)}} />
                         </div>
                     </div>
                     <div className="main-chat-box">
@@ -81,6 +91,8 @@ const Chat = () => {
                         <div className="chat-box-input-bottom-border"></div>
                     </div>
                 </div>
+                { showFriendDetail && <UserDetailsSidebar /> }
+               
             </div>
         </>
     )

@@ -1,22 +1,21 @@
 
 *{
     box-sizing: border-box;
-    border: 1px solid black;
-    color: black;
 }
 #cursor{
     cursor: pointer;
 }
 
 .chat-component-header{
-    background-color: chartreuse;
+    background-color: #2A2438;
     height: 7vh;
+    color: #fff;
     display: flex;
 }
 
 .left-header-features-wrapper{
     flex: 25%;
-    border-right: 2px solid gray ;
+    border-right: 2px solid #ffffffb9 ; 
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -24,7 +23,6 @@
 }
 
 .left-header-features{
-    background-color: rosybrown;
     width: 50%;
     display: flex;
     align-items: center;
@@ -43,12 +41,10 @@
 }
 
 .application-name{
-    background-color: yellow;
 }
 
 .setting-and-prfile-feature{
     width: 10%;
-    background-color: rgb(2, 2, 255);
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -56,21 +52,21 @@
 }
 
 .chat-body-main-div{
-    background-color: aqua;
     width: 100%;
     height: 93vh;
     display: flex;
 }
 
 .friends-list-main-wrapper{
-    background-color: bisque;
-    flex: 25%;
+    background-color: #5C5470;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    border-right: 2px solid #ffffffb9 ; 
+    width: 25%;
 }
 
 
 .friends-list-search{
-    height: 5vh;
-    background-color: violet;
+    height: 7vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -89,6 +85,7 @@
 
 #search-logo{
     flex: 10%;
+    cursor: pointer;
 }
 .search-box-wrapper input{
     height: 100%;
@@ -96,15 +93,15 @@
     border: none;
     outline: none;
     padding: 0 10px 0 10px;
+    font-weight: bold;
 }
 
-/* .search-box-wrapper input */
 
 
 .friends-list-div{
-    height: 88vh;
+    height: 86vh;
     width: 100%;
-    background-color: darkolivegreen;
+    color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -112,29 +109,32 @@
 }
 
 .friends-list-item{
-    background-color: aliceblue;
-    width: 90%;
-    height: 7vh;
-    margin: 20px 0 0 0;
-    padding: 10px;
-    border-radius: 10px;
+    width: 100%;
+    height: 10vh;
+    padding: 10px 20px 10px;
     display: flex;
     align-items: center;
 }
-
+.friends-list-item-bottom-border{    
+    width: 90%;
+    height: .2vh;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
 
 
 
 .chat-box-main-div{
-    background-color: blueviolet;
-    flex: 75%;
+    background-color: #5C5470;
+    width: 75%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    color: #fff;
 }
 
 .fellow-user-details-header{
-    background-color: darkturquoise;
     height: 5vh;
     display: flex;
     align-items: center;
@@ -143,7 +143,6 @@
 }
 
 .chat-box-feature-left{
-    background-color: teal;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -151,16 +150,15 @@
 }
 
 .show-fellow-user-details{
-    background-color: aqua;
 }
 
 .main-chat-box{
-    background-color: brown;
+    background-color: #DBD8E3;
     flex: 1;
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 }
 
 .chat-box-input-wrapper{
-    background-color: steelblue;
     height: 6vh;
 }
 
@@ -169,7 +167,7 @@
     display: flex;
 }
 .chat-box-input-box input{
-    flex: 93%;
+    flex: 90%;
     height: 100%;
     border: none;
     outline: none;
@@ -179,7 +177,8 @@
 }
 
 .send-logo-div{
-    flex: 7%;
+    flex: 10%;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,6 +187,6 @@
 }
 
 .chat-box-input-bottom-border{
-    background-color: black;
+    background-color: #2A2438;
     height: 1vh;
 }
