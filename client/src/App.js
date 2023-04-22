@@ -5,16 +5,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import Home from './Components/Home';
 import Chat from './Components/Chat/Chat';
 import Form from './Components/Form/Form';
+import ChatContextProvider from './ContextAPI/chatContext';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/chats' element={<Chat />} />
-          <Route path='/auth' element={<Form />} />
-        </Routes>
-      </BrowserRouter>
+      <ChatContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/chats' element={<Chat />} />
+            <Route path='/auth' element={<Form />} />
+          </Routes>
+        </BrowserRouter>
+      </ChatContextProvider>
 
       <ToastContainer
         position="top-center"

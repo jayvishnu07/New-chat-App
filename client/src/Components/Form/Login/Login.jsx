@@ -3,10 +3,12 @@ import './Login.css'
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { EntireChatState } from '../../../ContextAPI/chatContext';
 
 
 
 const Login = () => {
+  const {setUser ,user} = EntireChatState()
   const [showPassword, setShowPassword] = useState(false);
   const [mail_id, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -41,9 +43,15 @@ const Login = () => {
           progress: undefined,
           theme: "dark",
         });
-        console.log(result);
+        console.log("original",result);
+        const stringified = JSON.stringify(result)
+        console.log("stringified",stringified);
+
+        localStorage.setItem('userInfo', stringified)
+        // console.log(localStorage.);
+        // setUser(result)
+
         navigate('/chats')
-        console.log("success");
       })
       .catch((error) => { //Take care of error prop
         toast.error(error?.response?.data, {

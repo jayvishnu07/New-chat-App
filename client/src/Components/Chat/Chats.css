@@ -1,28 +1,28 @@
-
-*{
+* {
     box-sizing: border-box;
 }
-#cursor{
+
+#cursor {
     cursor: pointer;
 }
 
-.chat-component-header{
+.chat-component-header {
     background-color: #2A2438;
     height: 7vh;
     color: #fff;
     display: flex;
 }
 
-.left-header-features-wrapper{
+.left-header-features-wrapper {
     flex: 25%;
-    border-right: 2px solid #ffffffb9 ; 
+    border-right: 2px solid #ffffffb9;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px;
 }
 
-.left-header-features{
+.left-header-features {
     width: 50%;
     display: flex;
     align-items: center;
@@ -30,7 +30,13 @@
     gap: 10px;
 }
 
-.righ-header-features-wrapper{
+.left-side-bar{
+    background-color: #2A2438 ;
+    color: #fff;
+}
+
+
+.righ-header-features-wrapper {
     flex: 75%;
     display: flex;
     align-items: center;
@@ -40,39 +46,62 @@
     padding: 30px 50px 30px 30px;
 }
 
-.application-name{
-}
+.application-name {}
 
-.setting-and-prfile-feature{
+.setting-and-prfile-feature {
+    /* background-color: beige; */
     width: 10%;
     display: flex;
     align-items: center;
     justify-content: space-around;
     gap: 10px;
+    padding: 0 0 8px 0;
 }
 
-.chat-body-main-div{
+.setting-and-prfile-feature img {
+    /* background-color: aqua; */
+    width: 3vw;
+    aspect-ratio: 1;
+    border-radius: 50%;
+}
+
+#proflie-in-model {
+    width: 40%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-size: cover;
+}
+
+.model-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.chat-body-main-div {
     width: 100%;
     height: 93vh;
     display: flex;
 }
 
-.friends-list-main-wrapper{
+.friends-list-main-wrapper {
     background-color: #5C5470;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-    border-right: 2px solid #ffffffb9 ; 
+    border-right: 2px solid #ffffffb9;
     width: 25%;
 }
 
 
-.friends-list-search{
+.friends-list-search {
     height: 7vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.search-box-wrapper{
+.search-box-wrapper {
     background-color: aliceblue;
     height: 80%;
     width: 90%;
@@ -83,11 +112,12 @@
     overflow: hidden;
 }
 
-#search-logo{
+#search-logo {
     flex: 10%;
     cursor: pointer;
 }
-.search-box-wrapper input{
+
+.search-box-wrapper input {
     height: 100%;
     flex: 90%;
     border: none;
@@ -98,7 +128,7 @@
 
 
 
-.friends-list-div{
+.friends-list-div {
     height: 86vh;
     width: 100%;
     color: #fff;
@@ -108,14 +138,15 @@
     justify-content: flex-start;
 }
 
-.friends-list-item{
+.friends-list-item {
     width: 100%;
     height: 10vh;
     padding: 10px 20px 10px;
     display: flex;
     align-items: center;
 }
-.friends-list-item-bottom-border{    
+
+.friends-list-item-bottom-border {
     width: 90%;
     height: .2vh;
     background-color: #fff;
@@ -125,7 +156,7 @@
 
 
 
-.chat-box-main-div{
+.chat-box-main-div {
     background-color: #5C5470;
     width: 75%;
     display: flex;
@@ -134,7 +165,7 @@
     color: #fff;
 }
 
-.fellow-user-details-header{
+.fellow-user-details-header {
     height: 5vh;
     display: flex;
     align-items: center;
@@ -142,31 +173,32 @@
     padding: 0 50px 0 30px;
 }
 
-.chat-box-feature-left{
+.chat-box-feature-left {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 20px;
 }
 
-.show-fellow-user-details{
-}
+.show-fellow-user-details {}
 
-.main-chat-box{
+.main-chat-box {
     background-color: #DBD8E3;
     flex: 1;
     box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+    transition: 2s ease-out;
 }
 
-.chat-box-input-wrapper{
+.chat-box-input-wrapper {
     height: 6vh;
 }
 
-.chat-box-input-box{
+.chat-box-input-box {
     height: 5vh;
     display: flex;
 }
-.chat-box-input-box input{
+
+.chat-box-input-box input {
     flex: 90%;
     height: 100%;
     border: none;
@@ -176,7 +208,7 @@
     font-size: 15px;
 }
 
-.send-logo-div{
+.send-logo-div {
     flex: 10%;
     padding: 10px;
     display: flex;
@@ -186,7 +218,7 @@
     font-weight: bold;
 }
 
-.chat-box-input-bottom-border{
+.chat-box-input-bottom-border {
     background-color: #2A2438;
     height: 1vh;
 }
