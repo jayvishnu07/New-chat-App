@@ -17,7 +17,7 @@ const Register = () => {
   const [data, setData] = useState(initialState);
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [profilePic, setProfilePic] = useState('');
+  const [profilePic, setProfilePic] = useState(null);
   const [loading, setLoading] = useState(false)
   const [picLoading, setPicLoading] = useState(false)
 
@@ -113,7 +113,7 @@ const Register = () => {
     }
 
     
-    axios.post('http://localhost:8080/auth/register/', { name, mail_id , password , profilePic })
+    axios.post('http://localhost:8080/user/auth/register/', { name, mail_id , password , profilePic })
     .then((result)=>{
       toast.success('🦄 Registration Successful!', {
         position: "top-center",
@@ -126,6 +126,8 @@ const Register = () => {
         theme: "dark",
         });
         console.log(result);
+        const stringified = JSON.stringify(result);
+        localStorage.setItem('userInfo', stringified);
         navigate('/chats')
         console.log("success");
     })

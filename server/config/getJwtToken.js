@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 
 
-const getJwtTocken=(id)=>{
+const getJwtToken=(id)=>{
     return jwt.sign({id},process.env.JWT_SECRET,{ expiresIn : '10d' })
 }
 
-module.exports = getJwtTocken;
+module.exports = getJwtToken;

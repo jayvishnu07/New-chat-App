@@ -48,21 +48,22 @@
 
 .application-name {}
 
-.setting-and-prfile-feature {
-    /* background-color: beige; */
+.setting-and-profile-feature {
     width: 10%;
     display: flex;
     align-items: center;
     justify-content: space-around;
     gap: 10px;
     padding: 0 0 8px 0;
+    cursor: pointer;
 }
 
-.setting-and-prfile-feature img {
-    /* background-color: aqua; */
-    width: 3vw;
+.setting-and-profile-feature img {
+    width: 2.5vw;
     aspect-ratio: 1;
+    margin-bottom: 2px;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 #proflie-in-model {
@@ -70,9 +71,21 @@
     aspect-ratio: 1;
     border-radius: 50%;
     background-size: cover;
+    cursor: pointer;
+}
+
+.model-footer, .model-header{
+    background-color: #2A2438;
+    color: #fff;
+}
+
+.btn-close{
+    background-color: #5C5470;
 }
 
 .model-body {
+    background-color: #2A2438;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -86,6 +99,15 @@
     display: flex;
 }
 
+.offcanvas-body{
+    /* height: 86vh; */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+
 .friends-list-main-wrapper {
     background-color: #5C5470;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
@@ -95,10 +117,68 @@
 
 
 .friends-list-search {
+    width: 100%;
     height: 7vh;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.new-friends-search-main-div{
+    margin-top: 10px;
+    height: 80vh;
+    width: 100%;
+    color: #fff;
+    margin: auto;
+    overflow-y: scroll;
+}
+
+.new-friends-search-main-div::-webkit-scrollbar{
+    display: none;
+}
+
+.new-friends-list-profile{
+    width: 4vw;
+    aspect-ratio: 1;
+    margin-bottom: 2px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.friends-list-wrapper{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0px 20px 0px;
+}
+
+.new-friends-list-item{
+    width: 100%;
+    height: 10vh;
+    padding: 10px 20px 10px;
+}
+
+.new-friends-list-item-wrapper{
+    display: flex;
+    align-items: center;
+    padding: 0px 20px 0px;
+    align-self: flex-start;
+}
+
+.new-friends-list-item-wrapper:hover{
+    background-color: #5C5470;
+}
+
+
+.new-friends-list-item-bottom-border{
+    width: 90%;
+    height: .2vh;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    margin: auto;
 }
 
 .search-box-wrapper {
@@ -155,14 +235,24 @@
 }
 
 
-
-.chat-box-main-div {
+.chat-and-user-detail-wrapper-main{
     background-color: #5C5470;
     width: 75%;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    transition: 2s ease-in-out;
+}
+
+.chat-box-main-div {
+    
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     color: #fff;
+    transition: 2s ease-in-out;
+    
 }
 
 .fellow-user-details-header {
@@ -180,13 +270,15 @@
     gap: 20px;
 }
 
-.show-fellow-user-details {}
+.show-fellow-user-details {
+    /* background-color: aqua; */
+}
 
 .main-chat-box {
     background-color: #DBD8E3;
     flex: 1;
     box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
-    transition: 2s ease-out;
+    transition: .2s ease-out;
 }
 
 .chat-box-input-wrapper {

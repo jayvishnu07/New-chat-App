@@ -31,7 +31,7 @@ const Login = () => {
       });
       return;
     }
-    axios.post('http://localhost:8080/auth/login/', { mail_id, password })
+    axios.post('http://localhost:8080/user/auth/login/', { mail_id, password })
       .then((result) => {
         toast.success('🦄 Login Successful!', {
           position: "top-center",
@@ -45,7 +45,6 @@ const Login = () => {
         });
         console.log("original",result);
         const stringified = JSON.stringify(result)
-        console.log("stringified",stringified);
 
         localStorage.setItem('userInfo', stringified)
         // console.log(localStorage.);

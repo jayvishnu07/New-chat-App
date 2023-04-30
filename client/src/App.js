@@ -9,15 +9,15 @@ import ChatContextProvider from './ContextAPI/chatContext';
 function App() {
   return (
     <div className="App">
-      <ChatContextProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <ChatContextProvider>
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/chats' element={<Chat />} />
             <Route path='/auth' element={<Form />} />
           </Routes>
-        </BrowserRouter>
-      </ChatContextProvider>
+        </ChatContextProvider>
+      </BrowserRouter>
 
       <ToastContainer
         position="top-center"
