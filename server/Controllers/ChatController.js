@@ -27,9 +27,10 @@ const getChat = async (req, res) => {
             path: 'recentMessage.sender',
             select: 'name mail_id profilePic'
         })
-
+        console.log('chat.length',chat.length);
+        console.log('chat.length',chat);
         if (chat.length > 0) {
-            res.status(200).send(chat[0])
+            return res.status(200).send(chat[0])
         }
     }
 
@@ -73,9 +74,9 @@ const getAllChats = async (req, res) => {
 }
 
 const createGroupChat = async (req, res) => {
-    const { groupName, users } = req.body;
+    const { groupName, groupProfile , users } = req.body;
     if (!groupName || !users) {
-        return res.status(400).send('Fill out all the Fields')
+        return res.status(400).send('Fill out group name and select users')
     }
     let usersArray = JSON.parse(users);
     usersArray.push(req.currentUser.id);
@@ -89,6 +90,7 @@ const createGroupChat = async (req, res) => {
             chatName: groupName,
             isGroupChat: true,
             users: usersArray,
+            groupProfile,
             groupAdmin: req.currentUser.id
         })
 

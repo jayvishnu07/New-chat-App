@@ -4,7 +4,6 @@ import './Chats.css'
 import { GiMagicHat } from 'react-icons/gi';
 import { BsSearch, BsFillChatRightTextFill } from 'react-icons/bs';
 import { FaUserFriends } from 'react-icons/fa';
-import { CgProfile } from 'react-icons/cg';
 import { AiFillSetting, AiOutlineSend } from 'react-icons/ai';
 import { MdNotifications } from 'react-icons/md';
 import UserDetailsSidebar from '../UserDetailsSidebar/UserDetailsSidebar';
@@ -16,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import SearchNewFriends from './SearchNewFriends';
 
 
 const Chat = () => {
@@ -27,6 +27,7 @@ const Chat = () => {
     const [newFriends, setNewFriends] = useState([])
     const [showFriendDetail, setShowFriendDetail] = useState(false)
     const [show, setShow] = useState(false);
+    const [showCreateChatModel, setShowCreateChatModel] = useState(false);
     const [showSearchFriends, setShowSearchFriends] = useState(false);
     const navigate = useNavigate()
     let sender;
@@ -95,13 +96,16 @@ const Chat = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-            const result = await axios.get(`http://localhost:8080/api/get-all-chats/`, config);
+            let result = await axios.get(`http://localhost:8080/api/get-all-chats/`, config);
+            result = result.data;
             console.log(result);
             console.log(selectedChat);
-            if (!currentChat.find((e) => e._id === selectedChat.data._id)) {
+            console.log(currentChat);
+            if (!(result.find((e) => e._id === selectedChat?.data?._id))) {
                 setCurrentChat((prev) => [...prev, result.data])
+                console.log("added");
             }
-            setCurrentChat(result.data)
+            setCurrentChat(result)
             // console.log("allchat", result);
             // onclose();
         } catch (error) {
@@ -111,13 +115,34 @@ const Chat = () => {
     }
 
     const getSender = (users) => {
-        return users[0]._id === _id ? users[0] : users[1];
+        return (users && (users[0]?._id === _id ? users[0] : users[1]))
     }
 
     useEffect(() => {
         getAllChats();
-        console.log('called',currentChat);        
+        console.log('currentChat', currentChat);
+        console.log('selectedChat', selectedChat);
     }, [selectedChat])
+
+    const createNewChat = async () => {
+
+        try {
+            const config = {
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            let result = await axios.post(`http://localhost:8080/api/create-new-chat/`, {}, config);
+            result = result.data;
+            console.log('created gropu chat', result);
+            setCurrentChat(result)
+        } catch (error) {
+            //toast
+            console.log(error.message);
+        }
+    }
+
 
     return (
         <>
@@ -143,31 +168,42 @@ const Chat = () => {
                                 </div>
 
                                 <div className="new-friends-search-main-div">
-                                    {
-                                        newFriends.map((newFriend, key) => {
-                                            return (
-                                                <div key={key} >
-                                                    <div className="new-friends-list-item-bottom-border"></div>
-                                                    <div className="new-friends-list-item-wrapper" id='cursor' onClick={() => accessChat(newFriend._id)}>
-                                                        <img id='cursor' src={newFriend.profilePic} className='new-friends-list-profile' alt="proflie" />
-                                                        <div className="new-friends-list-item">
-                                                            {newFriend.name}
-                                                            <br />
-                                                            {`latest message`}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                    <div className="new-friends-list-item-bottom-border"></div>
+                                    <SearchNewFriends newFriends={newFriends} accessChat={accessChat} />
                                 </div>
 
                             </Offcanvas.Body>
                         </Offcanvas>
                         {/*  ending of search new friends sidebar */}
 
-                        <BsFillChatRightTextFill size={25} id='cursor' />
+                        <BsFillChatRightTextFill size={25} id='cursor' onClick={() => setShowCreateChatModel(true)} />
+                        {/* create chat model */}
+                        <Modal
+                            show={showCreateChatModel}
+                            onHide={() => setShowSearchFriends(false)}
+                            backdrop="static"
+                            keyboard={false}
+                        >
+                            <Modal.Header className='model-header' >
+                                <Modal.Title>Create New Group Chat</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body className='model-body' >
+                                <label htmlFor="chatName">Chat Name</label>
+                                <input type="text" />
+                                <input className='register-form-input-file' name='profilePic' type="file" placeholder='ConfirmPassword' />
+                                <div className="search-box-wrapper">
+                                    <BsSearch id='search-logo' onClick={searchNewFriendHandler} fill='#000' />
+                                    <input type="text" onChange={(e) => setSearchInput(e.target.value)} onKeyDown={(e) => (e.code === 'Enter') ? searchNewFriendHandler() : null} placeholder='Search Friends...' />
+                                </div>  
+                                <div className="">
+                                    <SearchNewFriends  newFriends={newFriends} accessChat={accessChat} />
+                                </div>
+                            </Modal.Body>
+                            <Modal.Footer className='model-footer' >
+                                <Button variant="secondary" onClick={() => setShowCreateChatModel(false)}>
+                                    Close
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                         <MdNotifications size={25} id='cursor' />
                     </div>
                 </div>
@@ -217,11 +253,11 @@ const Chat = () => {
                             currentChat &&
                             currentChat.map((res, key) => {
                                 return (
-                                    <div key={key} id='cursor' className='friends-list-wrapper'>
-                                        <div className="new-friends-list-item-wrapper"  >
-                                            <img id='cursor' src={res.isGroupChat ? '' : getSender(res.users).profilePic} className='new-friends-list-profile' alt="proflie" />
+                                    <div key={key} id='cursor' onClick={() => setSelectedChat(res)} className='friends-list-wrapper'>
+                                        <div className="new-friends-list-item-wrapper-main"  >
+                                            <img id='cursor' src={res.isGroupChat ? '' : getSender(res.users)?.profilePic} className='new-friends-list-profile' alt="proflie" />
                                             <div className="new-friends-list-item">
-                                                {res.isGroupChat ? res.chatName : getSender(res.users).name}
+                                                {res.isGroupChat ? res.chatName : getSender(res.users)?.name}
                                                 <br />
                                                 {`latest message`}
                                             </div>
@@ -236,32 +272,37 @@ const Chat = () => {
                     </div>
                 </div>
                 {/* chat box  */}
-                {/* <div className="chat-box-main-div" style={showFriendDetail ? { width: "50%" } : { width: "75%" }}> */}
                 <div className="chat-and-user-detail-wrapper-main">
-                    <div className="chat-box-main-div">
-                        <div className="fellow-user-details-header">
-                            <div className="chat-box-feature-left">
-                                <CgProfile size={30} id='cursor' />
-                                Friend's name
-                            </div>
-                            <div className="show-fellow-user-details">
-                                <AiFillSetting size={25} id='cursor' onClick={() => { setShowFriendDetail(true) }} />
-                            </div>
-                        </div>
-                        <div className="main-chat-box">
-                        </div>
-                        <div className="chat-box-input-wrapper">
-                            <div className="chat-box-input-box">
-                                <input type="text" placeholder='Type your message here...' />
-                                <div className="send-logo-div">
-                                    send
-                                    <AiOutlineSend size={30} fill='#fff' />
+                    {selectedChat ?
+                        <div className="chat-box-main-div">
+                            <div className="fellow-user-details-header">
+                                <div className="chat-box-feature-left">
+                                    {/* <CgProfile size={30} id='cursor' /> */}
+                                    <img id='cursor' src={selectedChat.isGroupChat ? '' : getSender(selectedChat.users)?.profilePic} onClick={() => { setShowFriendDetail(true) }} className='opposite-user-profile-in-top-bar' alt="proflie" />
+                                    {selectedChat ? getSender(selectedChat?.users)?.name : `Friend's name`}
+                                </div>
+                                <div className="show-fellow-user-details">
+                                    <AiFillSetting size={25} id='cursor' onClick={() => { setShowFriendDetail(true) }} />
                                 </div>
                             </div>
-                            <div className="chat-box-input-bottom-border"></div>
+                            <div className="main-chat-box">
+
+                            </div>
+                            <div className="chat-box-input-wrapper">
+                                <div className="chat-box-input-box">
+                                    <input type="text" placeholder='Type your message here...' />
+                                    <div className="send-logo-div">
+                                        send
+                                        <AiOutlineSend size={30} fill='#fff' />
+                                    </div>
+                                </div>
+                                <div className="chat-box-input-bottom-border"></div>
+                            </div>
                         </div>
-                    </div>
-                    {showFriendDetail && <UserDetailsSidebar setShowFriendDetail={setShowFriendDetail} />}
+                        :
+                        <div> No chats yet </div>
+                    }
+                    {showFriendDetail && <UserDetailsSidebar oppositeUser={selectedChat && getSender(selectedChat.users)} setShowFriendDetail={setShowFriendDetail} />}
                 </div>
 
             </div>

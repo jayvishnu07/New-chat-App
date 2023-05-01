@@ -74,6 +74,14 @@
     cursor: pointer;
 }
 
+.opposite-user-profile-in-top-bar{
+    width: 2rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-size: cover;
+    cursor: pointer;    
+}
+
 .model-footer, .model-header{
     background-color: #2A2438;
     color: #fff;
@@ -154,6 +162,10 @@
     padding: 0px 20px 0px;
 }
 
+.friends-list-wrapper:hover{
+    background-color: #2A2438;
+}
+
 .new-friends-list-item{
     width: 100%;
     height: 10vh;
@@ -161,6 +173,14 @@
 }
 
 .new-friends-list-item-wrapper{
+    display: flex;
+    align-items: center;
+    padding: 0px 20px 0px;
+    align-self: flex-start;
+}
+
+.new-friends-list-item-wrapper-main{
+    width: 100%;
     display: flex;
     align-items: center;
     padding: 0px 20px 0px;

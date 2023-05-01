@@ -46,6 +46,7 @@
     justify-content: center;
     flex-direction: column;
     gap: 10px;
+    cursor: pointer;
 }
 
 .friend-profile{
