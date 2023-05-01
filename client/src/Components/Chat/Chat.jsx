@@ -66,8 +66,10 @@ const Chat = () => {
                 Authorization: `Bearer ${token}`
             }
         }
-        const result = await axios.get(`http://localhost:8080/user/search-new-friends?search=${searchInput}`, config)
-        setNewFriends(result.data)
+        if (searchInput) {
+            const result = await axios.get(`http://localhost:8080/user/search-new-friends?search=${searchInput}`, config)
+            setNewFriends(result.data)
+        }
     }
 
     const accessChat = async (oppositeUserId) => {
@@ -186,20 +188,22 @@ const Chat = () => {
                             <Modal.Header className='model-header' >
                                 <Modal.Title>Create New Group Chat</Modal.Title>
                             </Modal.Header>
-                            <Modal.Body className='model-body' >
-                                <label htmlFor="chatName">Chat Name</label>
-                                <input type="text" />
-                                <input className='register-form-input-file' name='profilePic' type="file" placeholder='ConfirmPassword' />
-                                <div className="search-box-wrapper">
+                            <Modal.Body className='new-chat-model-body' >
+                                <div className="new-chat-form">
+                                    <label htmlFor="chatName">Group Name</label>
+                                    <input type="text" placeholder='Group Name...' />
+                                    <input className='new-chat-form-input-file' name='profilePic' type="file" placeholder='ConfirmPassword' />
+                                </div>
+                                <div className="search-box-wrapper new-chat-search-box-wrapper">
                                     <BsSearch id='search-logo' onClick={searchNewFriendHandler} fill='#000' />
                                     <input type="text" onChange={(e) => setSearchInput(e.target.value)} onKeyDown={(e) => (e.code === 'Enter') ? searchNewFriendHandler() : null} placeholder='Search Friends...' />
-                                </div>  
-                                <div className="">
-                                    <SearchNewFriends  newFriends={newFriends} accessChat={accessChat} />
+                                </div>
+                                <div className="new-chat-model-searching">
+                                    <SearchNewFriends newFriends={newFriends} accessChat={accessChat} />
                                 </div>
                             </Modal.Body>
                             <Modal.Footer className='model-footer' >
-                                <Button variant="secondary" onClick={() => setShowCreateChatModel(false)}>
+                                <Button variant="secondary" onClick={() => {setShowCreateChatModel(false);setNewFriends([])}}>
                                     Close
                                 </Button>
                             </Modal.Footer>

@@ -166,7 +166,7 @@ const Register = () => {
           <i className={showConfirmPassword ? "fa fa-eye" : "fa fa-eye-slash"} onClick={() => { setShowConfirmPassword((prev) => !prev) }} id="togglePassword"></i>
         </span>
         <label htmlFor="profilePic" id='uploading-animaation' >Upload Profile {picLoading && <ScaleLoader height={10} /> } </label>
-        <input onChange={ (e) => profilePicHandler(e.target.files[0]) } className='register-form-input-file' name='profilePic' type="file" placeholder='ConfirmPassword' />
+        <input onChange={ (e) => profilePicHandler(e.target.files[0]) } className='register-form-input-file' name='profilePic' type="file"/>
       </div>
 
       <button className="register-submit-btn" onClick={signUp}>Sign-Up</button>
