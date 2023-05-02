@@ -17,7 +17,7 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
                 </div>
             </div>
             <div className="dividing-border-div"></div>
-            {!chatInfo.isGroupChat && <div className="email-div">{` Email : ${chatInfo?.mail_id}`}</div>}
+            <div className="email-div-or-participants-title">{!chatInfo.isGroupChat ? ` Email : ${chatInfo?.mail_id}` :' Group Participants ~'}</div>
             {
                 chatInfo.isGroupChat &&
                 chatInfo.users.map((res, key) => {

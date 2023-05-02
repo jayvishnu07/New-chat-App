@@ -23,7 +23,7 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 const Chat = () => {
 
     const { setSelectedChat, selectedChat, currentChat, setCurrentChat } = EntireChatState()
-    let user = JSON.parse(localStorage.getItem('userInfo'))
+    const [user, setUser] = useState({})
     const [chats, setChats] = useState([])
     const [searchInput, setSearchInput] = useState('')
     const [newFriends, setNewFriends] = useState([])
@@ -56,11 +56,14 @@ const Chat = () => {
         });
     }
 
-    // useEffect(() => {
-    //     console.log(user);
-    // }, [user])
+    useEffect(() => {
 
-    const { _id, name, mail_id, profilePic, token } = user?.data;
+        setUser(JSON.parse(localStorage.getItem('userInfo')).data)
+        console.log('USER', JSON.parse(localStorage.getItem('userInfo')).data);
+    }, [])
+
+    const { id, name, mail_id, profilePic, token } = user;
+
     const onclose = () => {
         setShowSearchFriends(false);
         setNewFriends([])
@@ -105,11 +108,13 @@ const Chat = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-            let result = await axios.get(`http://localhost:8080/api/get-all-chats/`, config);
-            result = result.data;
+            console.log('token', token);
+            let result;
+            if (token) {
+                result = await axios.get(`http://localhost:8080/api/get-all-chats/`, config);
+                result = result.data;
+            }
             console.log(result);
-            console.log(selectedChat);
-            console.log(currentChat);
             if (!(result.find((e) => e._id === selectedChat?.data?._id))) {
                 setCurrentChat((prev) => [...prev, result.data])
                 console.log("added");
@@ -124,7 +129,7 @@ const Chat = () => {
     }
 
     const getSender = (users) => {
-        return (users && (users[0]?._id === _id ? users[0] : users[1]))
+        return (users && (users[0]?._id === id ? users[1] : users[0]))
     }
     const addFriendsToChat = (newUser) => {
         setNewlyAddedFriends([...newlyAddedFriends, newUser._id])
@@ -217,17 +222,14 @@ const Chat = () => {
         setShowCreateChatModel(false);
     }
     useEffect(() => {
-
-        // console.log('newlyAddedFriends', newlyAddedFriends);
-        // console.log('newlyAddedFriendsObject', newlyAddedFriendsObject);
-    }, [newlyAddedFriends])
+        setCurrentChat(currentChat.filter(e => e._id !== id))
+        console.log('from now', currentChat);
+        console.log('from now', id);
+    }, [])
 
     useEffect(() => {
         getAllChats();
-        // console.log('currentChat', currentChat);
-        console.log('selectedChat', selectedChat);
-        console.log('selectedChat', selectedChat.length);
-    }, [selectedChat])
+    }, [selectedChat,user])
 
     const removeUserFromAddingGroup = (userId) => {
         setNewlyAddedFriendsObject(newlyAddedFriendsObject.filter(e => e._id !== userId))
@@ -401,7 +403,7 @@ const Chat = () => {
                             <div className="chat-box-feature-left">
                                 {/* <CgProfile size={30} id='cursor' /> */}
                                 <img id='cursor' src={selectedChat.isGroupChat ? selectedChat?.groupProfile : getSender(selectedChat.users)?.profilePic} onClick={() => { setShowFriendDetail(true) }} className='opposite-user-profile-in-top-bar' alt="proflie" />
-                                { !selectedChat.isGroupChat ? getSender(selectedChat?.users)?.name : selectedChat.chatName}
+                                {!selectedChat.isGroupChat ? getSender(selectedChat?.users)?.name : selectedChat.chatName}
                             </div>
                             <div className="show-fellow-user-details">
                                 <AiFillSetting size={25} id='cursor' onClick={() => { setShowFriendDetail(true) }} />
@@ -421,7 +423,7 @@ const Chat = () => {
                             <div className="chat-box-input-bottom-border"></div>
                         </div>
                     </div>
-                    {showFriendDetail && <UserDetailsSidebar chatInfo={!selectedChat.isGroupChat ? getSender(selectedChat.users) : selectedChat}   setShowFriendDetail={setShowFriendDetail} />}
+                    {showFriendDetail && <UserDetailsSidebar chatInfo={!selectedChat.isGroupChat ? getSender(selectedChat.users) : selectedChat} setShowFriendDetail={setShowFriendDetail} />}
                 </div>
                 <div className={selectedChat.length === 0 ? 'no-chat-notify' : 'none'} >No Chats Yet . . . !</div>
             </div>
