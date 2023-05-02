@@ -9,7 +9,7 @@ const SearchNewFriends = ({newFriends, accessChat}) => {
                     return (
                         <div key={key} >
                             <div className="new-friends-list-item-bottom-border"></div>
-                            <div className="new-friends-list-item-wrapper" id='cursor' onClick={() => accessChat(newFriend._id)}>
+                            <div className="new-friends-list-item-wrapper" id='cursor' onClick={() => accessChat(newFriend)}>
                                 <img id='cursor' src={newFriend.profilePic} className='new-friends-list-profile' alt="proflie" />
                                 <div className="new-friends-list-item">
                                     {newFriend.name}

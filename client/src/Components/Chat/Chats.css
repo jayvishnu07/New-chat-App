@@ -6,6 +6,10 @@
     cursor: pointer;
 }
 
+.none{
+    display: none;
+}
+
 .chat-component-header {
     background-color: #2A2438;
     height: 7vh;
@@ -128,6 +132,9 @@
 
 .new-chat-form input{
     padding: 0px 10px;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
 }
 
 .new-chat-form-input-file {
@@ -404,4 +411,31 @@
 .chat-box-input-bottom-border {
     background-color: #2A2438;
     height: 1vh;
+}
+
+.no-chat-notify{
+    display: block;
+    flex: 75%;
+    height: 100%;
+    background-color: #5C5470;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.added-friends-to-new-chat-div{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.added-friends-to-new-chat{
+    background-color: darkcyan;
+    width: max-content;
+    padding: 0px 10px;
+    border-radius: 5px;
 }

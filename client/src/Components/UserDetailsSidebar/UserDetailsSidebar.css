@@ -31,13 +31,12 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
-/* dummy div */
-
-.dummy-div{
-    height: 20vh;
+.email-div{
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-/* dummy div */
 
 .friend-profile-wrapper{
     height: 30%;

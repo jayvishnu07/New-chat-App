@@ -26,11 +26,11 @@ const Register = () => {
   const onChangeHandler = (e) => {
     setData({ ...data, [e.target.name]: e.target.value })
   }
-  const profilePicHandler=(pic)=>{
+  const profilePicHandler = (pic) => {
     setLoading(true);
     setPicLoading(true)
 
-    if(pic === undefined){
+    if (pic === undefined) {
       toast.warn('🦄 Please Select a Image.', {
         position: "top-center",
         autoClose: 2000,
@@ -40,51 +40,51 @@ const Register = () => {
         draggable: true,
         progress: undefined,
         theme: "dark",
-        });
-        return;
+      });
+      return;
     }
-  
-  console.log(pic);
-  if (pic.type === "image/jpeg" || pic.type === "image/png") {
-    const data = new FormData();
-    data.append("file", pic);
-    data.append("upload_preset", "Chat-Application");
-    data.append("cloud_name", "djn1saw5y");
-    fetch("https://api.cloudinary.com/v1_1/djn1saw5y/image/upload", {
-      method: "post",
-      body: data,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setProfilePic(data.url.toString());
-        console.log(data.url.toString());
-        setPicLoading(false);
+
+    console.log(pic);
+    if (pic.type === "image/jpeg" || pic.type === "image/png") {
+      const data = new FormData();
+      data.append("file", pic);
+      data.append("upload_preset", "Chat-Application");
+      data.append("cloud_name", "djn1saw5y");
+      fetch("https://api.cloudinary.com/v1_1/djn1saw5y/image/upload", {
+        method: "post",
+        body: data,
       })
-      .catch((err) => {
-        console.log(err);
-        setPicLoading(false);
+        .then((res) => res.json())
+        .then((data) => {
+          setProfilePic(data.url.toString());
+          console.log(data.url.toString());
+          setPicLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setPicLoading(false);
+        });
+    } else {
+      toast.warn('🦄 it is not a Image.', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
       });
-  } else {
-    toast.warn('🦄 it is not a Image.', {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      });
-    setPicLoading(false);
-    return;
-  }
-  console.log(profilePic);
+      setPicLoading(false);
+      return;
+    }
+    console.log(profilePic);
   }
 
   const signUp = e => {
     e.preventDefault();
-    const { name , mail_id , password ,confirmPassword } = data;
-    if( !name || !mail_id || !password ){
+    const { name, mail_id, password, confirmPassword } = data;
+    if (!name || !mail_id || !password) {
       toast.warn('🦄 Please fill out all the fields.', {
         position: "top-center",
         autoClose: 2000,
@@ -94,11 +94,11 @@ const Register = () => {
         draggable: true,
         progress: undefined,
         theme: "dark",
-        });
-        return;
+      });
+      return;
     }
 
-    if( password !== confirmPassword ){
+    if (password !== confirmPassword) {
       toast.warn('🦄 Password is missmatching', {
         position: "top-center",
         autoClose: 2000,
@@ -108,42 +108,42 @@ const Register = () => {
         draggable: true,
         progress: undefined,
         theme: "dark",
-        });
-        return;
+      });
+      return;
     }
 
-    
-    axios.post('http://localhost:8080/user/auth/register/', { name, mail_id , password , profilePic })
-    .then((result)=>{
-      toast.success('🦄 Registration Successful!', {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
+
+    axios.post('http://localhost:8080/user/auth/register/', { name, mail_id, password, profilePic })
+      .then((result) => {
+        toast.success('🦄 Registration Successful!', {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
         });
         console.log(result);
         const stringified = JSON.stringify(result);
         localStorage.setItem('userInfo', stringified);
         navigate('/chats')
         console.log("success");
-    })
-    .catch((error)=>{ //Take care of error prop
-      toast.error('🦄 Something went wrong while registration!', {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
+      })
+      .catch((error) => { //Take care of error prop
+        toast.error('🦄 Something went wrong while registration!', {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
         });
-        return ;
-    })
+        return;
+      })
 
   }
 
@@ -165,8 +165,8 @@ const Register = () => {
           <input onChange={onChangeHandler} className='register-form-input' name='confirmPassword' type={showConfirmPassword ? 'text' : 'password'} placeholder='ConfirmPassword' />
           <i className={showConfirmPassword ? "fa fa-eye" : "fa fa-eye-slash"} onClick={() => { setShowConfirmPassword((prev) => !prev) }} id="togglePassword"></i>
         </span>
-        <label htmlFor="profilePic" id='uploading-animaation' >Upload Profile {picLoading && <ScaleLoader height={10} /> } </label>
-        <input onChange={ (e) => profilePicHandler(e.target.files[0]) } className='register-form-input-file' name='profilePic' type="file"/>
+        <label htmlFor="profilePic" id='uploading-animaation' >Upload Profile {picLoading && <ScaleLoader height={10} />} </label>
+        <input onChange={(e) => profilePicHandler(e.target.files[0])} className='register-form-input-file' name='profilePic' type="file" />
       </div>
 
       <button className="register-submit-btn" onClick={signUp}>Sign-Up</button>
