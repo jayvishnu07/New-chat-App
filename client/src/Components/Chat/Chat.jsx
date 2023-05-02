@@ -36,6 +36,7 @@ const Chat = () => {
     const [groupProfilePic, setGroupProfilePic] = useState('');
     const [groupName, setGroupName] = useState('');
     const [picLoading, setPicLoading] = useState(false);
+    const [selectedChatFromChat, setSelectedChatFromChat] = useState(selectedChat);
     const navigate = useNavigate()
     let sender;
 
@@ -229,7 +230,7 @@ const Chat = () => {
 
     useEffect(() => {
         getAllChats();
-    }, [selectedChat,user])
+    }, [selectedChat, user])
 
     const removeUserFromAddingGroup = (userId) => {
         setNewlyAddedFriendsObject(newlyAddedFriendsObject.filter(e => e._id !== userId))
@@ -379,7 +380,7 @@ const Chat = () => {
                             currentChat &&
                             currentChat.map((res, key) => {
                                 return (
-                                    <div key={key} id='cursor' onClick={() => setSelectedChat(res)} className='friends-list-wrapper'>
+                                    <div key={key} id='cursor' onClick={() => { setSelectedChat(res); setSelectedChatFromChat(res) }} className='friends-list-wrapper'>
                                         <div className="new-friends-list-item-wrapper-main"  >
                                             <img id='cursor' src={res.isGroupChat ? res.groupProfile : getSender(res.users)?.profilePic} className='new-friends-list-profile' alt="proflie" />
                                             <div className="new-friends-list-item">
@@ -402,8 +403,8 @@ const Chat = () => {
                         <div className="fellow-user-details-header">
                             <div className="chat-box-feature-left">
                                 {/* <CgProfile size={30} id='cursor' /> */}
-                                <img id='cursor' src={selectedChat.isGroupChat ? selectedChat?.groupProfile : getSender(selectedChat.users)?.profilePic} onClick={() => { setShowFriendDetail(true) }} className='opposite-user-profile-in-top-bar' alt="proflie" />
-                                {!selectedChat.isGroupChat ? getSender(selectedChat?.users)?.name : selectedChat.chatName}
+                                <img id='cursor' src={selectedChatFromChat?.users ? (selectedChatFromChat?.isGroupChat ? selectedChatFromChat?.groupProfile : getSender(selectedChatFromChat?.users)?.profilePic) : selectedChatFromChat.profilePic} onClick={() => { setShowFriendDetail(true) }} className='opposite-user-profile-in-top-bar' alt="proflie" />
+                                {selectedChatFromChat?.users ? (!selectedChatFromChat.isGroupChat ? getSender(selectedChatFromChat?.users)?.name : selectedChatFromChat.chatName) : selectedChatFromChat.name}
                             </div>
                             <div className="show-fellow-user-details">
                                 <AiFillSetting size={25} id='cursor' onClick={() => { setShowFriendDetail(true) }} />
@@ -423,7 +424,7 @@ const Chat = () => {
                             <div className="chat-box-input-bottom-border"></div>
                         </div>
                     </div>
-                    {showFriendDetail && <UserDetailsSidebar chatInfo={!selectedChat.isGroupChat ? getSender(selectedChat.users) : selectedChat} setShowFriendDetail={setShowFriendDetail} />}
+                    {showFriendDetail && <UserDetailsSidebar chatInfo={!selectedChat.isGroupChat ? getSender(selectedChat.users) : selectedChatFromChat} setShowFriendDetail={setShowFriendDetail} setSelectedChat={setSelectedChatFromChat} />}
                 </div>
                 <div className={selectedChat.length === 0 ? 'no-chat-notify' : 'none'} >No Chats Yet . . . !</div>
             </div>
