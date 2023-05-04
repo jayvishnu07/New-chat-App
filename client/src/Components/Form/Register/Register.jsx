@@ -17,7 +17,7 @@ const Register = () => {
   const [data, setData] = useState(initialState);
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [profilePic, setProfilePic] = useState(null);
+  const [profilePic, setProfilePic] = useState();
   const [loading, setLoading] = useState(false)
   const [picLoading, setPicLoading] = useState(false)
 

@@ -69,16 +69,25 @@ const loginUser = async (req, res) => {
 }
 
 const searchNewFriends = async (req, res) => {
-    const keyword = req.query.search && {
-        $or: [
-            { name: { $regex: req.query.search, $options: 'i' } },
-            { mail_id: { $regex: req.query.search, $options: 'i' } }
-        ]
+
+    const keyword = req.query.search;
+    try {
+        
+        if (keyword) {
+            const user = await UserModel.find({
+                $or: [
+                    { name: { $regex: keyword, $options: 'i' } },
+                    { mail_id: { $regex: keyword, $options: 'i' } }
+                ]
+            })
+            .find({ _id: { $ne: req.currentUser.id } })
+
+            console.log('keyword', user);
+            res.status(200).send(user)
+        }
+    } catch (error) {
+        console.log('error from serach user',error.message);
     }
-
-
-    const user = await UserModel.find(keyword).find({ _id: { $ne: req.currentUser.id } })
-    res.status(200).send(user)
 }
 
 module.exports = { registerUser, loginUser, searchNewFriends }

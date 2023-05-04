@@ -1,7 +1,8 @@
 import React from 'react'
 import './Chats.css'
 
-const SearchNewFriends = ({newFriends, accessChat}) => {
+const SearchNewFriends = ({ newFriends, accessChat }) => {
+    console.log('newFriends, accessChat',newFriends);
     return (
         <>
             {

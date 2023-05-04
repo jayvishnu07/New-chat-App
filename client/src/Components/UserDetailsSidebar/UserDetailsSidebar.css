@@ -1,37 +1,63 @@
-.user-sidebar-main-div{
+.user-sidebar-main-div {
     width: 25vw;
     height: 100%;
     background-color: #352F44;
     color: #fff;
     overflow-y: scroll;
-    transition: 2s ease-in-out;
 }
 
 
-.user-sidebar-main-div::-webkit-scrollbar{
+.user-sidebar-main-div::-webkit-scrollbar {
     display: none;
 }
 
-.return-feture-div{    
-    height: 5vh;
+.sidebar-header {
+    position: sticky;
+    top: 0;
+    background-color: #352F44;
+}
+
+.sidebar-header-feture-div {
+    height: 7vh;
     width: 100%;
     display: flex;
     align-items: center;
-    padding: 0 0 0 3%;
+    padding: 0 3% 0 3%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
-#cursor{
+
+#cursor {
     cursor: pointer;
 }
 
-.dividing-border-div{
+.dividing-border-div {
     background-color: #fff;
     width: 90%;
     height: .2vh;
     margin-left: 5%;
+    border-radius: 50%;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
-.email-div-or-participants-title{
+.dividing-border-div-top {
+    background-color: #fff;
+    width: 90%;
+    height: .2vh;
+    border-radius: 50%;
+    margin-left: 5%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+.friends-list-item-top-border{
+    background-color: #fff;
+    width: 90%;
+    height: .5vh;
+    margin-left: 5%;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;    
+}
+.email-div-or-participants-title {
     margin: 10px;
     display: flex;
     align-items: center;
@@ -39,7 +65,7 @@
     gap: 10px;
 }
 
-.friend-profile-wrapper{
+.friend-profile-wrapper {
     height: 30%;
     display: flex;
     align-items: center;
@@ -49,9 +75,29 @@
     cursor: pointer;
 }
 
-.friend-profile{
+.friend-profile {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     background-color: #fff;
+}
+
+
+.friends-list-main-wrapper-user-sidebar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px 20px 0px;
+    align-self: flex-start;
+}
+
+.friends-list-main-wrapper-user-sidebar:hover {
+    background-color: #5C5470;
+}
+
+.friends-list-profile-user-sidebar {
+    width: 3vw;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    cursor: pointer;
 }

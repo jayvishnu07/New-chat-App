@@ -3,6 +3,7 @@ const UserModel = require("../Models/UserModel");
 
 const getChat = async (req, res) => {
     const { oppositeUserId } = req.body;
+    console.log(oppositeUserId,'kicking');
 
     if (!oppositeUserId) {
         console.log("id not given");
@@ -22,21 +23,22 @@ const getChat = async (req, res) => {
         .populate('users', '-password')
         .populate('recentMessage')
 
+        console.log('chat.length', chat);
     if (chat) {
         chat = await UserModel.populate(chat, {
             path: 'recentMessage.sender',
             select: 'name mail_id profilePic'
         })
-        console.log('chat.length',chat.length);
-        console.log('chat.length',chat);
+        console.log('chat.length', chat.length);
         if (chat.length > 0) {
             return res.status(200).send(chat[0])
         }
     }
 
+
     try {
         const createdChat = await ChatModel.create({
-            chatName: 'sender',
+            chatName: 'Direct Chat',
             isGroupChat: false,
             users: [req.currentUser.id, oppositeUserId]
         })
@@ -74,17 +76,17 @@ const getAllChats = async (req, res) => {
 }
 
 const createGroupChat = async (req, res) => {
-    const { groupName, groupProfile , users } = req.body;
+    const { groupName, groupProfile, users } = req.body;
     if (!groupName || !users) {
         return res.status(400).send('Fill out group name and select users')
     }
     let usersArray = JSON.parse(users);
     usersArray.push(req.currentUser.id);
-
+    
     if (usersArray.length < 2) {
         return res.status(400).send("Minimun two people required to start a group")
     }
-
+    
     try {
         const groupchat = await ChatModel.create({
             chatName: groupName,
@@ -93,42 +95,66 @@ const createGroupChat = async (req, res) => {
             groupProfile,
             groupAdmin: req.currentUser.id
         })
-
+        
         const wholeChat = await ChatModel.find({ _id: groupchat._id })
-            .populate('users', '-password')
-            .populate('groupAdmin', '-password')
-
+        .populate('users', '-password')
+        .populate('groupAdmin', '-password')
+        
         res.status(200).send(wholeChat);
-
+        
     } catch (error) {
         res.status(401).send('error from createGroupChat', error.message)
     }
 }
 
-const renameGroupChat = async (req, res) => {
-    const { chatId, newGroupName } = req.body;
 
-    const group = await ChatModel.findByIdAndUpdate(chatId, { chatName: newGroupName }, { new: true })
-        .populate('users', '-password')
-        .populate('groupAdmin', '-password')
+// const renameGroupChat = async (req, res) => {
+    //     const { chatId, newGroupName } = req.body;
+    
+    //     const group = await ChatModel.findByIdAndUpdate(chatId, { chatName: newGroupName }, { new: true })
+    //         .populate('users', '-password')
+    //         .populate('groupAdmin', '-password')
+    
+    //     if (!group) {
+        //         return res.status(404).send("Group Not Found")
+        //     }
+        //     res.status(200).send(group)
+        // }
+        
+        // const addFriendToGroup = async (req, res) => {
+            //     const { chatId, idOfUserToBeAdded } = req.body;
+            
+            //     const group = await ChatModel.findByIdAndUpdate(chatId, { $push: { users: idOfUserToBeAdded } }, { new: true })
+            //         .populate('users', '-password')
+//         .populate('groupAdmin', '-password')
 
-    if (!group) {
-        return res.status(404).send("Group Not Found")
-    }
-    res.status(200).send(group)
-}
-
-const addFriendToGroup = async (req, res) => {
-    const { chatId, idOfUserToBeAdded } = req.body;
-
-    const group = await ChatModel.findByIdAndUpdate(chatId, { $push: { users: idOfUserToBeAdded } }, { new: true })
-        .populate('users', '-password')
-        .populate('groupAdmin', '-password')
-
-    if (!group) {
-        return res.status(404).send("Group Not Found")
-    }
-    res.status(200).send(group)
+//     if (!group) {
+    //         return res.status(404).send("Group Not Found")
+    //     }
+    //     res.status(200).send(group)
+    // }
+    
+    const editGroupChat = async (req, res) => {
+        let { chatId, newGroupName, groupProfile, users } = req.body;
+        
+        let usersArray = JSON.parse(users);
+        usersArray.push(req.currentUser.id);
+        
+        const group = await ChatModel.findByIdAndUpdate(chatId,
+            {
+                chatName: newGroupName,
+                users : usersArray,
+                groupProfile    
+            },
+            { new: true })
+            .populate('users', '-password')
+            .populate('groupAdmin', '-password')
+            
+            if (!group) {
+                return res.status(404).send("Group Not Found")
+            }
+            console.log('Edited group',group);
+            res.status(200).send(group)
 }
 
 const removeFriendFromGroup = async (req, res) => {
@@ -144,4 +170,5 @@ const removeFriendFromGroup = async (req, res) => {
     res.status(200).send(group)
 }
 
-module.exports = { getChat, getAllChats, createGroupChat, renameGroupChat, addFriendToGroup, removeFriendFromGroup }
+
+module.exports = { getChat, getAllChats, createGroupChat, editGroupChat, removeFriendFromGroup }
