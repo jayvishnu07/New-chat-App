@@ -2,7 +2,6 @@ import React from 'react'
 import './Chats.css'
 
 const SearchNewFriends = ({ newFriends, accessChat }) => {
-    console.log('newFriends, accessChat',newFriends);
     return (
         <>
             {
@@ -15,7 +14,7 @@ const SearchNewFriends = ({ newFriends, accessChat }) => {
                                 <div className="new-friends-list-item">
                                     {newFriend.name}
                                     <br />
-                                    {`latest message`}
+                                    {newFriend.mail_id}
                                 </div>
                             </div>
                         </div>

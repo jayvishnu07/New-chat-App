@@ -32,6 +32,46 @@
     cursor: pointer;
 }
 
+.header-edit-icon {
+    position: relative;
+    transition: .3s ease-in-out;
+}
+
+.header-drop-down {
+    background-color: #5C5470;
+    width: 15vw;
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    opacity: 1;
+}
+
+.none-header{
+    display: none;
+    opacity: 0;
+    position: absolute;
+    right: 10%;
+    top: 0%;
+}
+
+.edit-group-name, .edit-group-profile, .edit-group-members, .exit-from-group, .deleted-group {
+    padding: 10px;
+    width: 100%;
+    height: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.edit-group-name:hover, .edit-group-profile:hover, .edit-group-members:hover, .exit-from-group:hover, .deleted-group:hover {
+    background-color: #352F44;
+}
+
+
+
 .dividing-border-div {
     background-color: #fff;
     width: 90%;
@@ -49,14 +89,16 @@
     margin-left: 5%;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
-.friends-list-item-top-border{
+
+.friends-list-item-top-border {
     background-color: #fff;
     width: 90%;
     height: .5vh;
     margin-left: 5%;
     border-radius: 50%;
-    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;    
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
+
 .email-div-or-participants-title {
     margin: 10px;
     display: flex;
@@ -83,21 +125,99 @@
 }
 
 
+.friends-list-wrapper-user-sidebar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: min-content;
+}
+
+.friends-list-wrapper-user-sidebar:hover {
+    background-color: #2A2438;
+}
+
 .friends-list-main-wrapper-user-sidebar {
     width: 100%;
     display: flex;
     align-items: center;
-    padding: 0px 20px 0px;
+    padding: 0px 20px 0px 20px;
     align-self: flex-start;
 }
 
-.friends-list-main-wrapper-user-sidebar:hover {
-    background-color: #5C5470;
-}
 
 .friends-list-profile-user-sidebar {
     width: 3vw;
     aspect-ratio: 1;
     border-radius: 50%;
     cursor: pointer;
+}
+
+#group-participant-name {
+    display: inline-block;
+    font-size: 15px;
+    width: 15vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#group-participant-mail_id {
+    display: inline-block;
+    font-size: 13px;
+    width: 15vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.group-participant-settings {
+    cursor: pointer;
+    position: relative;
+}
+
+.group-participant-settings:hover .friends-list-wrapper-user-sidebar {
+    background-color: transparent;
+}
+
+.drop-down {
+    background-color: #5C5470;
+    width: 15vw;
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: .3s ease-in-out;
+}
+
+.none {
+    display: none;
+}
+
+.go-to-chat {
+    padding: 10px;
+    width: 100%;
+    height: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.go-to-chat:hover {
+    background-color: #352F44;
+}
+
+.remove-from-chat {
+    padding: 10px;
+    width: 100%;
+    height: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.remove-from-chat:hover {
+    background-color: #352F44;
 }

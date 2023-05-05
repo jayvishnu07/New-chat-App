@@ -16,7 +16,7 @@ const ChatBox = () => {
     let sender;
 
     useEffect(() => {
-        setUser(JSON.parse(localStorage.getItem('userInfo')).data)
+        setUser(JSON.parse(localStorage.getItem('userInfo')))
     }, [])
 
     const { id, name, mail_id, profilePic, token } = user;
@@ -65,15 +65,13 @@ const ChatBox = () => {
                         <input type="text" placeholder='Search Friends...' />
                     </div>
                 </div>
-                {
-                    console.log('current',currentChat)
-                }
                 <div className="friends-list-div">
                     {
                         currentChat &&
                         currentChat.map((res, key) => {
                             return (
-                                <div key={key} id='cursor' onClick={() => setSelectedChat(res)} className='friends-list-wrapper'>
+                                <div key={key} id='cursor' onClick={() => setSelectedChat(res)} className={res._id === selectedChat._id ?'friends-list-wrapper-selected' :'friends-list-wrapper'}>
+                                    {console.log("selectedChat",selectedChat)}
                                     <div className="new-friends-list-item-wrapper-main"  >
                                         <img id='cursor' src={res.isGroupChat ? res.groupProfile : getSender(res.users)?.profilePic} className='new-friends-list-profile' alt="proflie" />
                                         <div className="new-friends-list-item">

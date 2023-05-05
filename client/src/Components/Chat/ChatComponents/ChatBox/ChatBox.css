@@ -63,7 +63,7 @@
 }
 
 .new-friends-list-profile {
-    width: 4vw;
+    width: 3vw;
     aspect-ratio: 1;
     margin-bottom: 2px;
     border-radius: 50%;
@@ -76,17 +76,29 @@
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    padding: 0px 20px 0px;
+    /* padding: 0px 20px 0px; */
+    background-color: #352f44dd;
+
 }
 
 .friends-list-wrapper:hover {
     background-color: #2A2438;
 }
 
+.friends-list-wrapper-selected{
+    background-color: #5C5470;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    /* padding: 0px 20px 0px; */
+}
+
 .new-friends-list-item {
     width: 100%;
     height: 10vh;
-    padding: 10px 20px 10px;
+    padding: 10px 20px 10px;    
 }
 
 .new-friends-list-item-wrapper {
@@ -171,7 +183,7 @@
 .friends-list-item-bottom-border {
     width: 90%;
     height: .2vh;
-    background-color: #fff;
+    background-color: #5C5470;
     border-radius: 50%;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }

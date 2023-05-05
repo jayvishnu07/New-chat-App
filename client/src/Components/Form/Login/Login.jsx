@@ -44,11 +44,11 @@ const Login = () => {
           theme: "dark",
         });
         console.log("original",result);
-        const stringified = JSON.stringify(result)
+        const stringified = JSON.stringify(result.data)
 
         localStorage.setItem('userInfo', stringified)
         // console.log(localStorage.);
-        // setUser(result)
+        setUser(result.data)
 
         navigate('/chats')
       })

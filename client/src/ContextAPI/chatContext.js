@@ -9,11 +9,7 @@ const ChatContextProvider = ({ children }) => {
     const [selectedChat, setSelectedChat] = useState({});
     const [currentChat, setCurrentChat] = useState([]);
     useEffect(() => {
-        const result = JSON.parse(localStorage.getItem('userInfo'))
-        setUser(result)
-        if (!result) { navigate('/auth') }
-        console.log('logged');
-        console.log(selectedChat);
+        if (!user) { navigate('/auth') }
     }, [navigate])
     return (
         <chatContext.Provider value={{ user, setUser, selectedChat, setSelectedChat, currentChat, setCurrentChat }}>{children}</chatContext.Provider>

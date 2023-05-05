@@ -4,7 +4,7 @@ import { MdEmail, MdGroups, MdOutlineDriveFileRenameOutline } from 'react-icons/
 import './UserDetailsSidebar.css'
 import ScaleLoader from 'react-spinners/ScaleLoader';
 import { IoMdClose } from 'react-icons/io';
-import { BsSearch } from 'react-icons/bs';
+import { BsSearch, BsThreeDotsVertical } from 'react-icons/bs';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { toast } from 'react-toastify';
@@ -13,6 +13,8 @@ import SearchNewFriends from '../Chat/SearchNewFriends';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { EntireChatState } from '../../ContextAPI/chatContext';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 
 const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
@@ -25,15 +27,18 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
     const [newFriends, setNewFriends] = useState([])
     const [newlyAddedFriends, setNewlyAddedFriends] = useState([]);
     const [newlyAddedFriendsObject, setNewlyAddedFriendsObject] = useState([]);
+    const [dropDownUserId, setDropDownUserId] = useState('');
+    const [showDropDown, setShowDropDown] = useState(false);
+    const [headerEditDropDown, setHeaderEditDropDown] = useState(false);
 
 
     useEffect(() => {
 
-        setUser(JSON.parse(localStorage.getItem('userInfo')).data)
+        setUser(JSON.parse(localStorage.getItem('userInfo')))
     }, [])
 
     const { id, name, mail_id, profilePic, token } = user;
-    const { setSelectedChat, selectedChat, currentChat , setCurrentChat} = EntireChatState()
+    const { setSelectedChat, selectedChat, currentChat, setCurrentChat } = EntireChatState()
 
 
 
@@ -147,10 +152,9 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
                 users: JSON.stringify(newlyAddedFriends)
             }
 
-            const {data} = await axios.put(`http://localhost:8080/api/edit-group-chat/`, info, config)
+            const { data } = await axios.put(`http://localhost:8080/api/edit-group-chat/`, info, config)
             setSelectedChat(data)
             setCurrentChat((prev) => [...prev, data])
-            console.log('data from created chat',data);
             setSearchInput('')
             onclose();
         } catch (error) {
@@ -160,14 +164,63 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
         setShowEditChatModel(false);
     }
 
-    console.log('chatInfo', chatInfo);
+    const removeFromGroup = async (idOfUserToBeRemoved) => {
+
+        try {
+            const config = {
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const info = {
+                chatId: selectedChat._id,
+                idOfUserToBeRemoved
+            }
+
+            const { data } = await axios.put(`http://localhost:8080/api/remove-friend-from-group/`, info, config)
+            setSelectedChat(data)
+            setCurrentChat((prev) => [...prev, data])
+            onclose();
+
+        } catch (error) {
+            //toast
+            console.log(error.message);
+        }
+
+        setShowDropDown(false)
+
+    }
+
+    const selectedChatFromUser = (res) => {
+        if (res._id !== id) {
+            setSelectedChat(res)
+        }
+        else {
+            // toast
+        }
+    }
+
+    const showDropDownFun = (res) => {
+        setDropDownUserId(res._id);
+        setShowDropDown(prev => !prev)
+    }
 
     return (
         <div className='user-sidebar-main-div'>
             <div className="sidebar-header">
                 <div className="sidebar-header-feture-div">
                     <HiChevronDoubleLeft onClick={() => setShowFriendDetail(false)} id='cursor' size={25} />
-                    <MdOutlineDriveFileRenameOutline size={25} onClick={() => { setShowEditChatModel(true); userOfTheSelectedGroup() }} id='cursor' />
+                    {/* () => { setShowEditChatModel(true); userOfTheSelectedGroup() } */}
+                    <MdOutlineDriveFileRenameOutline onClick={()=>{setHeaderEditDropDown(prev=>!prev);console.log('clicked');}} className='header-edit-icon' id='cursor' size={25} />
+                    <div className={headerEditDropDown ? "header-drop-down" : 'none-header'}>
+                        <div className="edit-group-name" onClick={() => {}} >Edit Group Name</div>
+                        <div className="edit-group-profile" onClick={() => {}} >Edit Group Profile</div>
+                        <div className="edit-group-members" onClick={() => {}} >Edit Group Members</div>
+                        <div className="exit-from-group" onClick={() => {}} >Exit from Group</div>
+                        <div className="deleted-group" onClick={() => {}} >Deleted Group</div>
+                    </div>
                 </div>
                 <div className="dividing-border-div-top"></div>
             </div>
@@ -175,7 +228,6 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
             {/* Edit group chat */}
             <Modal
                 show={showEditChatModel}
-                // onHide={() => setShowSearchFriends(false)}
                 backdrop="static"
                 keyboard={false}
             >
@@ -234,13 +286,24 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
                 chatInfo?.isGroupChat &&
                 chatInfo.users.map((res, key) => {
                     return (
-                        <div key={key} id='cursor' className='friends-list-wrapper' onDoubleClick={() => { setSelectedChat(res); console.log('res', res); }} >
+                        <div key={key} className='friends-list-wrapper-user-sidebar' >
                             <div className="friends-list-main-wrapper-user-sidebar"  >
                                 <img id='cursor' src={res.profilePic} className='friends-list-profile-user-sidebar' alt="proflie" />
                                 <div className="new-friends-list-item">
-                                    {res.name}
+                                    <span id='group-participant-name' >
+                                        {res._id === id ? `You` : res.name}
+                                    </span>
                                     <br />
-                                    {`latest message`}
+                                    <span id='group-participant-mail_id' >
+                                        {res.mail_id}
+                                    </span>
+                                </div>
+                                <div className='group-participant-settings' >
+                                    <BsThreeDotsVertical size={18} onClick={() => { showDropDownFun(res) }} />
+                                    <div className={showDropDown && (dropDownUserId === res._id) ? "drop-down" : 'none'}>
+                                        <div className="go-to-chat" onClick={() => { selectedChatFromUser(res); setShowDropDown(false) }} >{`Message ${res.name}`}</div>
+                                        <div className="remove-from-chat" onClick={() => removeFromGroup(res._id)} >Remove from Chat</div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="friends-list-item-bottom-border"></div>
@@ -252,13 +315,24 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
                 chatInfo?.isGroupChat &&
                 chatInfo.users.map((res, key) => {
                     return (
-                        <div key={key} id='cursor' className='friends-list-wrapper' onDoubleClick={() => { setSelectedChat(res); console.log('res', res); }} >
+                        <div key={key} className='friends-list-wrapper-user-sidebar' >
                             <div className="friends-list-main-wrapper-user-sidebar"  >
-                                <img id='cursor' src={res.profilePic} className='friends-list-profile-user-sidebar' />
+                                <img id='cursor' src={res.profilePic} className='friends-list-profile-user-sidebar' alt="proflie" />
                                 <div className="new-friends-list-item">
-                                    {res.name}
+                                    <span id='group-participant-name' >
+                                        {res._id === id ? `You` : res.name}
+                                    </span>
                                     <br />
-                                    {`latest message`}
+                                    <span id='group-participant-mail_id' >
+                                        {res.mail_id}
+                                    </span>
+                                </div>
+                                <div className='group-participant-settings' >
+                                    <BsThreeDotsVertical size={18} onClick={()=>{showDropDownFun(res)}} />
+                                    <div className={(dropDownUserId === res._id) && showDropDown ? "drop-down" : 'none'}>
+                                        <div className="go-to-chat" onClick={() => {selectedChatFromUser(res);setShowDropDown(false)}} >{`Message ${res.name}`}</div>
+                                        <div className="remove-from-chat">Remove from Chat</div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="friends-list-item-bottom-border"></div>
@@ -266,6 +340,7 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
                     )
                 })
             } */}
+
 
         </div>
     )

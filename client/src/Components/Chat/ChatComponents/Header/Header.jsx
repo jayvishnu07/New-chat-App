@@ -38,7 +38,7 @@ const Header = () => {
     const { setSelectedChat, selectedChat } = EntireChatState()
 
     useEffect(() => {
-        setUser(JSON.parse(localStorage.getItem('userInfo')).data)
+        setUser(JSON.parse(localStorage.getItem('userInfo')))
     }, [])
 
     const { id, name, mail_id, profilePic, token } = user;
