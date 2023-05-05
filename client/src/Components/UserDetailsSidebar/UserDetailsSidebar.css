@@ -64,6 +64,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+    font-size: 15px;
 }
 
 .edit-group-name:hover, .edit-group-profile:hover, .edit-group-members:hover, .exit-from-group:hover, .deleted-group:hover {
@@ -203,6 +204,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 15px;
 }
 
 .go-to-chat:hover {
@@ -216,6 +218,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 15px;
 }
 
 .remove-from-chat:hover {

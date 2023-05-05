@@ -15,6 +15,7 @@ import axios from 'axios'
 import { EntireChatState } from '../../ContextAPI/chatContext';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import UserDetailsHeader from './UserDetailsHeader';
 
 
 const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
@@ -29,7 +30,7 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
     const [newlyAddedFriendsObject, setNewlyAddedFriendsObject] = useState([]);
     const [dropDownUserId, setDropDownUserId] = useState('');
     const [showDropDown, setShowDropDown] = useState(false);
-    const [headerEditDropDown, setHeaderEditDropDown] = useState(false);
+
 
 
     useEffect(() => {
@@ -210,21 +211,8 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
     return (
         <div className='user-sidebar-main-div'>
             <div className="sidebar-header">
-                <div className="sidebar-header-feture-div">
-                    <HiChevronDoubleLeft onClick={() => setShowFriendDetail(false)} id='cursor' size={25} />
-                    {/* () => { setShowEditChatModel(true); userOfTheSelectedGroup() } */}
-                    <MdOutlineDriveFileRenameOutline onClick={()=>{setHeaderEditDropDown(prev=>!prev);console.log('clicked');}} className='header-edit-icon' id='cursor' size={25} />
-                    <div className={headerEditDropDown ? "header-drop-down" : 'none-header'}>
-                        <div className="edit-group-name" onClick={() => {}} >Edit Group Name</div>
-                        <div className="edit-group-profile" onClick={() => {}} >Edit Group Profile</div>
-                        <div className="edit-group-members" onClick={() => {}} >Edit Group Members</div>
-                        <div className="exit-from-group" onClick={() => {}} >Exit from Group</div>
-                        <div className="deleted-group" onClick={() => {}} >Deleted Group</div>
-                    </div>
-                </div>
-                <div className="dividing-border-div-top"></div>
+                <UserDetailsHeader setShowFriendDetail={setShowFriendDetail} />
             </div>
-
             {/* Edit group chat */}
             <Modal
                 show={showEditChatModel}
@@ -300,7 +288,7 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
                                 </div>
                                 <div className='group-participant-settings' >
                                     <BsThreeDotsVertical size={18} onClick={() => { showDropDownFun(res) }} />
-                                    <div className={showDropDown && (dropDownUserId === res._id) ? "drop-down" : 'none'}>
+                                    <div className={showDropDown && (dropDownUserId === res._id) ? "drop-down" : 'none'} onMouseLeave={() => setShowDropDown(false)} >
                                         <div className="go-to-chat" onClick={() => { selectedChatFromUser(res); setShowDropDown(false) }} >{`Message ${res.name}`}</div>
                                         <div className="remove-from-chat" onClick={() => removeFromGroup(res._id)} >Remove from Chat</div>
                                     </div>
@@ -311,37 +299,6 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
                     )
                 })
             }
-            {/* {
-                chatInfo?.isGroupChat &&
-                chatInfo.users.map((res, key) => {
-                    return (
-                        <div key={key} className='friends-list-wrapper-user-sidebar' >
-                            <div className="friends-list-main-wrapper-user-sidebar"  >
-                                <img id='cursor' src={res.profilePic} className='friends-list-profile-user-sidebar' alt="proflie" />
-                                <div className="new-friends-list-item">
-                                    <span id='group-participant-name' >
-                                        {res._id === id ? `You` : res.name}
-                                    </span>
-                                    <br />
-                                    <span id='group-participant-mail_id' >
-                                        {res.mail_id}
-                                    </span>
-                                </div>
-                                <div className='group-participant-settings' >
-                                    <BsThreeDotsVertical size={18} onClick={()=>{showDropDownFun(res)}} />
-                                    <div className={(dropDownUserId === res._id) && showDropDown ? "drop-down" : 'none'}>
-                                        <div className="go-to-chat" onClick={() => {selectedChatFromUser(res);setShowDropDown(false)}} >{`Message ${res.name}`}</div>
-                                        <div className="remove-from-chat">Remove from Chat</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="friends-list-item-bottom-border"></div>
-                        </div>
-                    )
-                })
-            } */}
-
-
         </div>
     )
 }
