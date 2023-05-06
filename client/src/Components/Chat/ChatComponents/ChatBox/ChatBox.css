@@ -77,16 +77,11 @@
     flex-direction: column;
     justify-content: center;
     /* padding: 0px 20px 0px; */
-    background-color: #352f44dd;
-
 }
 
-.friends-list-wrapper:hover {
-    background-color: #2A2438;
-}
 
 .friends-list-wrapper-selected{
-    background-color: #5C5470;
+    background-color: #2A2438;
     width: 100%;
     display: flex;
     align-items: center;
@@ -166,6 +161,7 @@
     align-items: center;
     justify-content: flex-start;
     overflow-y: scroll;
+    background-color: #352F44 ;
 }
 
 .friends-list-div::-webkit-scrollbar{

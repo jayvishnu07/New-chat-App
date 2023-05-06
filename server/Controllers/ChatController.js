@@ -3,7 +3,7 @@ const UserModel = require("../Models/UserModel");
 
 const getChat = async (req, res) => {
     const { oppositeUserId } = req.body;
-    console.log(oppositeUserId,'kicking');
+    console.log(oppositeUserId, 'kicking');
 
     if (!oppositeUserId) {
         console.log("id not given");
@@ -23,7 +23,7 @@ const getChat = async (req, res) => {
         .populate('users', '-password')
         .populate('recentMessage')
 
-        console.log('chat.length', chat);
+    console.log('chat.length', chat);
     if (chat) {
         chat = await UserModel.populate(chat, {
             path: 'recentMessage.sender',
@@ -82,11 +82,11 @@ const createGroupChat = async (req, res) => {
     }
     let usersArray = JSON.parse(users);
     usersArray.push(req.currentUser.id);
-    
+
     if (usersArray.length < 2) {
         return res.status(400).send("Minimun two people required to start a group")
     }
-    
+
     try {
         const groupchat = await ChatModel.create({
             chatName: groupName,
@@ -95,66 +95,113 @@ const createGroupChat = async (req, res) => {
             groupProfile,
             groupAdmin: req.currentUser.id
         })
-        
+
         const wholeChat = await ChatModel.find({ _id: groupchat._id })
-        .populate('users', '-password')
-        .populate('groupAdmin', '-password')
-        
+            .populate('users', '-password')
+            .populate('groupAdmin', '-password')
+
         res.status(200).send(wholeChat);
-        
+
     } catch (error) {
         res.status(401).send('error from createGroupChat', error.message)
     }
 }
 
+const editChatName = async (req, res) => {
+    let { chatId, newGroupName } = req.body;
 
-// const renameGroupChat = async (req, res) => {
-    //     const { chatId, newGroupName } = req.body;
-    
-    //     const group = await ChatModel.findByIdAndUpdate(chatId, { chatName: newGroupName }, { new: true })
-    //         .populate('users', '-password')
-    //         .populate('groupAdmin', '-password')
-    
-    //     if (!group) {
-        //         return res.status(404).send("Group Not Found")
-        //     }
-        //     res.status(200).send(group)
-        // }
-        
-        // const addFriendToGroup = async (req, res) => {
-            //     const { chatId, idOfUserToBeAdded } = req.body;
-            
-            //     const group = await ChatModel.findByIdAndUpdate(chatId, { $push: { users: idOfUserToBeAdded } }, { new: true })
-            //         .populate('users', '-password')
-//         .populate('groupAdmin', '-password')
+    try {
 
-//     if (!group) {
-    //         return res.status(404).send("Group Not Found")
-    //     }
-    //     res.status(200).send(group)
-    // }
-    
-    const editGroupChat = async (req, res) => {
-        let { chatId, newGroupName, groupProfile, users } = req.body;
-        
-        let usersArray = JSON.parse(users);
-        usersArray.push(req.currentUser.id);
-        
         const group = await ChatModel.findByIdAndUpdate(chatId,
             {
                 chatName: newGroupName,
-                users : usersArray,
-                groupProfile    
             },
             { new: true })
             .populate('users', '-password')
             .populate('groupAdmin', '-password')
-            
-            if (!group) {
-                return res.status(404).send("Group Not Found")
-            }
-            console.log('Edited group',group);
-            res.status(200).send(group)
+
+        if (!group) {
+            return res.status(404).send("Group Not Found")
+        }
+        res.status(200).send(group)
+    } catch (error) {
+        console.log('error from editChatName', error.message);
+    }
+}
+
+const editChatProfile = async (req, res) => {
+    let { chatId, groupProfile } = req.body;
+
+    try {
+
+        const group = await ChatModel.findByIdAndUpdate(chatId,
+            {
+                groupProfile
+            },
+            { new: true })
+            .populate('users', '-password')
+            .populate('groupAdmin', '-password')
+
+        if (!group) {
+            return res.status(404).send("Group Not Found")
+        }
+        res.status(200).send(group)
+    } catch (error) {
+        console.log('error from editChatProfile', error.message);
+    }
+}
+
+// const renameGroupChat = async (req, res) => {
+//     const { chatId, newGroupName } = req.body;
+
+//     const group = await ChatModel.findByIdAndUpdate(chatId, { chatName: newGroupName }, { new: true })
+//         .populate('users', '-password')
+//         .populate('groupAdmin', '-password')
+
+//     if (!group) {
+//         return res.status(404).send("Group Not Found")
+//     }
+//     res.status(200).send(group)
+// }
+
+// const addFriendToGroup = async (req, res) => {
+//     const { chatId, idOfUserToBeAdded } = req.body;
+
+//     const group = await ChatModel.findByIdAndUpdate(chatId, { $push: { users: idOfUserToBeAdded } }, { new: true })
+//         .populate('users', '-password')
+//         .populate('groupAdmin', '-password')
+
+//     if (!group) {
+//         return res.status(404).send("Group Not Found")
+//     }
+//     res.status(200).send(group)
+// }
+
+const editChatMembers = async (req, res) => {
+    let { chatId, users } = req.body;
+
+    let usersArray = JSON.parse(users);
+    usersArray.push(req.currentUser.id);
+    try {
+        const group = await ChatModel.findByIdAndUpdate(chatId,
+            {
+                users: usersArray,
+            },
+            { new: true })
+            .populate('users', '-password')
+            .populate('groupAdmin', '-password')
+    
+        if (!group) {
+            return res.status(404).send("Group Not Found")
+        }
+        console.log('Edited group', group);
+        res.status(200).send(group)
+        
+    } catch (error) {
+        console.log('error from editChatMembers', error.message);
+
+    }
+
 }
 
 const removeFriendFromGroup = async (req, res) => {
@@ -170,5 +217,46 @@ const removeFriendFromGroup = async (req, res) => {
     res.status(200).send(group)
 }
 
+const exitFromGroup = async (req, res) => {
+    const { chatId, idOfUserToBeRemoved , newAdminId } = req.body;
 
-module.exports = { getChat, getAllChats, createGroupChat, editGroupChat, removeFriendFromGroup }
+    const group = await ChatModel.findByIdAndUpdate(chatId, 
+        { 
+            $pull: { users: idOfUserToBeRemoved },
+            groupAdmin : newAdminId
+        }, { new: true })
+        .populate('users', '-password')
+        .populate('groupAdmin', '-password')
+
+    if (!group) {
+        return res.status(404).send("Group Not Found")
+    }
+    res.status(200).send(group)
+}
+
+const deleteGroup = async (req, res) => {
+    const { chatId } = req.body;
+
+    const group = await ChatModel.findByIdAndDelete(chatId)
+
+    if (!group) {
+        return res.status(404).send("Group Not Found")
+    }
+    console.log('deleted group',group);
+    res.status(200).send(group)
+}
+
+
+
+
+module.exports = {
+    getChat,
+    getAllChats,
+    createGroupChat,
+    editChatMembers,
+    removeFriendFromGroup,
+    editChatName,
+    editChatProfile,
+    exitFromGroup,
+    deleteGroup
+}

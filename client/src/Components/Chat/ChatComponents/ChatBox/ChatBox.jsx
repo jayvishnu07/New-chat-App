@@ -12,6 +12,7 @@ const ChatBox = () => {
     const { setSelectedChat, selectedChat, currentChat, setCurrentChat } = EntireChatState()
     const [user, setUser] = useState({})
     const [showFriendDetail, setShowFriendDetail] = useState(false)
+    const [render, setRender] = useState(false)
     const [chats, setChats] = useState([])
     let sender;
 
@@ -20,6 +21,7 @@ const ChatBox = () => {
     }, [])
 
     const { id, name, mail_id, profilePic, token } = user;
+
 
     const getAllChats = async () => {
         try {
@@ -33,10 +35,12 @@ const ChatBox = () => {
                 result = await axios.get(`http://localhost:8080/api/get-all-chats/`, config);
                 result = result.data;
             }
-            if (!(result.find((e) => e._id === selectedChat?.data?._id))) {
-                setCurrentChat((prev) => [...prev, result.data])
+            if ((result.find((e) => e._id === selectedChat?._id))) {
+                setCurrentChat((prev) => [...prev, selectedChat])
             }
             setCurrentChat(result)
+            setRender(prev=>!prev)
+            console.log('currentChat',currentChat);
         } catch (error) {
             //toast
             console.log(error.message);
@@ -49,10 +53,14 @@ const ChatBox = () => {
 
     useEffect(() => {
         setCurrentChat(currentChat.filter(e => e._id !== id))
+        console.log('currentChat',currentChat);
+
     }, [])
     
     useEffect(() => {
         getAllChats();
+        console.log('currentChat',currentChat);
+        
     }, [selectedChat, user])
     
 
@@ -65,13 +73,17 @@ const ChatBox = () => {
                         <input type="text" placeholder='Search Friends...' />
                     </div>
                 </div>
+                {
+            console.log('currentChat',currentChat)
+
+                }
                 <div className="friends-list-div">
                     {
                         currentChat &&
                         currentChat.map((res, key) => {
                             return (
                                 <div key={key} id='cursor' onClick={() => setSelectedChat(res)} className={res._id === selectedChat._id ?'friends-list-wrapper-selected' :'friends-list-wrapper'}>
-                                    {console.log("selectedChat",selectedChat)}
+                                    {console.log("currentChat",currentChat)}
                                     <div className="new-friends-list-item-wrapper-main"  >
                                         <img id='cursor' src={res.isGroupChat ? res.groupProfile : getSender(res.users)?.profilePic} className='new-friends-list-profile' alt="proflie" />
                                         <div className="new-friends-list-item">
@@ -111,7 +123,6 @@ const ChatBox = () => {
                         <div className="chat-box-input-bottom-border"></div>
                     </div>
                 </div>
-{                console.log('selected chat after',selectedChat)}
                {showFriendDetail && <UserDetailsSidebar user chatInfo={ selectedChat.users ?  (!selectedChat.isGroupChat) ? getSender(selectedChat.users) : selectedChat : selectedChat} setShowFriendDetail={setShowFriendDetail}  />}
             </div>
             <div className={!selectedChat._id ? 'no-chat-notify' : 'none'} >

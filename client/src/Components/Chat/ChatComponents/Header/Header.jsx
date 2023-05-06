@@ -68,7 +68,6 @@ const Header = () => {
     const handleShow = () => setShow(true);
 
     const searchNewFriendHandler = async () => {
-        console.log("here", token);
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -111,6 +110,8 @@ const Header = () => {
         }
 
         setNewlyAddedFriendsObject([...newlyAddedFriendsObject, newUser])
+        console.log("created chat",[...newlyAddedFriendsObject, newUser]);
+        console.log('newlyAddedFriends',newlyAddedFriends);
     }
 
     const profilePicHandler = (pic) => {
@@ -186,6 +187,7 @@ const Header = () => {
             setSelectedChat(data)
             onclose();
             setNewFriends([])
+            setNewlyAddedFriends([])
         } catch (error) {
             //toast
             console.log(error.message);
@@ -266,7 +268,7 @@ const Header = () => {
                             <Button variant="secondary" onClick={() => { setShowCreateChatModel(false); setNewFriends([]); setNewlyAddedFriendsObject([]) }}>
                                 Close
                             </Button>
-                            <Button variant="primary" onClick={createGroupChat}>
+                            <Button variant="primary" onClick={()=>{createGroupChat();setNewFriends([]);setNewlyAddedFriendsObject([])}}>
                                 Create
                             </Button>
                         </Modal.Footer>

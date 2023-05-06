@@ -16,14 +16,15 @@ import { EntireChatState } from '../../ContextAPI/chatContext';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import UserDetailsHeader from './UserDetailsHeader';
+import { FcApproval } from 'react-icons/fc';
 
 
 const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
     const [user, setUser] = useState({})
     const [showEditChatModel, setShowEditChatModel] = useState(false)
-    const [groupProfilePic, setGroupProfilePic] = useState('');
     const [searchInput, setSearchInput] = useState('')
     const [newGroupName, setNewGroupName] = useState('');
+    const [groupProfilePic, setGroupProfilePic] = useState('');
     const [picLoading, setPicLoading] = useState(false);
     const [newFriends, setNewFriends] = useState([])
     const [newlyAddedFriends, setNewlyAddedFriends] = useState([]);
@@ -31,6 +32,7 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
     const [dropDownUserId, setDropDownUserId] = useState('');
     const [showDropDown, setShowDropDown] = useState(false);
 
+    const [render, setRender] = useState(false)
 
 
     useEffect(() => {
@@ -133,7 +135,6 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
     }, [newlyAddedFriendsObject])
 
     useEffect(() => {
-        console.log('newlyAddedFriends', newlyAddedFriends);
     }, [newlyAddedFriends])
 
 
@@ -166,7 +167,38 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
     }
 
     const removeFromGroup = async (idOfUserToBeRemoved) => {
+        if (selectedChat?.groupAdmin?._id === id) {
+            try {
+                const config = {
+                    headers: {
+                        'Content-type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                }
 
+                const info = {
+                    chatId: selectedChat._id,
+                    idOfUserToBeRemoved
+                }
+
+                const { data } = await axios.put(`http://localhost:8080/api/remove-friend-from-group/`, info, config)
+                setSelectedChat(data)
+                setCurrentChat((prev) => [...prev, data])
+                onclose();
+
+            } catch (error) {
+                //toast
+                console.log(error.message);
+            }
+
+        }
+
+        setShowDropDown(false)
+
+    }
+
+    const accessChat = async (oppositeUser) => {
+        const oppositeUserId = oppositeUser._id;
         try {
             const config = {
                 headers: {
@@ -174,34 +206,15 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
                     Authorization: `Bearer ${token}`
                 }
             }
-
-            const info = {
-                chatId: selectedChat._id,
-                idOfUserToBeRemoved
-            }
-
-            const { data } = await axios.put(`http://localhost:8080/api/remove-friend-from-group/`, info, config)
-            setSelectedChat(data)
-            setCurrentChat((prev) => [...prev, data])
-            onclose();
-
+            const { data } = await axios.post(`http://localhost:8080/api/get-message`, { oppositeUserId }, config)
+            setSelectedChat(...data)
+            console.log(...data);
         } catch (error) {
-            //toast
+            //toast            
             console.log(error.message);
         }
-
-        setShowDropDown(false)
-
     }
 
-    const selectedChatFromUser = (res) => {
-        if (res._id !== id) {
-            setSelectedChat(res)
-        }
-        else {
-            // toast
-        }
-    }
 
     const showDropDownFun = (res) => {
         setDropDownUserId(res._id);
@@ -279,20 +292,24 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
                                 <img id='cursor' src={res.profilePic} className='friends-list-profile-user-sidebar' alt="proflie" />
                                 <div className="new-friends-list-item">
                                     <span id='group-participant-name' >
-                                        {res._id === id ? `You` : res.name}
+
+                                        {res._id === id ? `You` : res.name} {(selectedChat?.groupAdmin?._id === res._id) && <FcApproval />}
                                     </span>
                                     <br />
                                     <span id='group-participant-mail_id' >
                                         {res.mail_id}
                                     </span>
                                 </div>
-                                <div className='group-participant-settings' >
-                                    <BsThreeDotsVertical size={18} onClick={() => { showDropDownFun(res) }} />
-                                    <div className={showDropDown && (dropDownUserId === res._id) ? "drop-down" : 'none'} onMouseLeave={() => setShowDropDown(false)} >
-                                        <div className="go-to-chat" onClick={() => { selectedChatFromUser(res); setShowDropDown(false) }} >{`Message ${res.name}`}</div>
-                                        <div className="remove-from-chat" onClick={() => removeFromGroup(res._id)} >Remove from Chat</div>
+                                {
+                                   ( (selectedChat?.groupAdmin?._id !== res._id) || ( selectedChat?.groupAdmin?._id !== id ) ) && res._id !== id &&
+                                    <div className='group-participant-settings' >
+                                        <BsThreeDotsVertical size={18} onClick={() => { showDropDownFun(res) }} />
+                                        <div className={showDropDown && (dropDownUserId === res._id) ? "drop-down" : 'none'} onMouseLeave={() => setShowDropDown(false)} >
+                                            <div className="go-to-chat" onClick={() => { accessChat(res); setShowDropDown(false) }} >{`Message ${res.name}`}</div>
+                                            {(selectedChat?.groupAdmin?._id === id) && <div className="remove-from-chat" onClick={() => removeFromGroup(res._id)} >Remove from Chat</div>}
+                                        </div>
                                     </div>
-                                </div>
+                                }
                             </div>
                             <div className="friends-list-item-bottom-border"></div>
                         </div>
