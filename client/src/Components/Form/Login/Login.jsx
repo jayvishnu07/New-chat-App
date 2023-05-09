@@ -45,10 +45,12 @@ const Login = () => {
         });
         console.log("original",result);
         const stringified = JSON.stringify(result.data)
-
+        const stringifiedToken = JSON.stringify(result.data.token)
         localStorage.setItem('userInfo', stringified)
+        localStorage.setItem('userToken', stringifiedToken)
         // console.log(localStorage.);
         setUser(result.data)
+        // console.log('result data,,',result.data)
 
         navigate('/chats')
       })
@@ -65,7 +67,6 @@ const Login = () => {
         });
         console.log(error.message);
         console.log(error.config);
-        console.log();
         return;
 
       })

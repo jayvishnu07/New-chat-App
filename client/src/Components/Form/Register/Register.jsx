@@ -125,8 +125,10 @@ const Register = () => {
           progress: undefined,
           theme: "dark",
         });
-        const stringified = JSON.stringify(result.data);
-        localStorage.setItem('userInfo', stringified);
+        const stringified = JSON.stringify(result.data)
+        const stringifiedToken = JSON.stringify(result.data.token)
+        localStorage.setItem('userInfo', stringified)
+        localStorage.setItem('userToken', stringifiedToken)
         navigate('/chats')
         console.log("success");
       })

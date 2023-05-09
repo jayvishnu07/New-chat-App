@@ -25,6 +25,8 @@ const UserDetailsHeader = ({ setShowFriendDetail }) => {
     const [showExitGroup, setShowExitGroup] = useState(false);
     const [showDeleteGroup, setShowDeleteGroup] = useState(false);
 
+    const [token, setToken] = useState(JSON.parse(localStorage.getItem('userToken')))
+
     //
 
     const [newChatName, setNewChatName] = useState('')
@@ -46,7 +48,7 @@ const UserDetailsHeader = ({ setShowFriendDetail }) => {
     const { setSelectedChat, selectedChat, currentChat, setCurrentChat } = EntireChatState()
 
 
-    const { id, name, mail_id, profilePic, token } = user;
+    const { id, name, mail_id, profilePic } = user;
 
 
     useEffect(() => {

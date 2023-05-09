@@ -31,17 +31,18 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
     const [newlyAddedFriendsObject, setNewlyAddedFriendsObject] = useState([]);
     const [dropDownUserId, setDropDownUserId] = useState('');
     const [showDropDown, setShowDropDown] = useState(false);
+    const [token, setToken] = useState(JSON.parse(localStorage.getItem('userToken')))
 
     const [render, setRender] = useState(false)
 
 
-    useEffect(() => {
+    const { setSelectedChat, selectedChat, currentChat, setCurrentChat } = EntireChatState()
 
+    useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('userInfo')))
     }, [])
 
-    const { id, name, mail_id, profilePic, token } = user;
-    const { setSelectedChat, selectedChat, currentChat, setCurrentChat } = EntireChatState()
+    const { id, name, mail_id, profilePic } = user;
 
 
 
@@ -301,11 +302,11 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
                                     </span>
                                 </div>
                                 {
-                                   ( (selectedChat?.groupAdmin?._id !== res._id) || ( selectedChat?.groupAdmin?._id !== id ) ) && res._id !== id &&
+                                    ((selectedChat?.groupAdmin?._id !== res._id) || (selectedChat?.groupAdmin?._id !== id)) && res._id !== id &&
                                     <div className='group-participant-settings' >
                                         <BsThreeDotsVertical size={18} onClick={() => { showDropDownFun(res) }} />
                                         <div className={showDropDown && (dropDownUserId === res._id) ? "drop-down" : 'none'} onMouseLeave={() => setShowDropDown(false)} >
-                                            <div className="go-to-chat" onClick={() => { accessChat(res); setShowDropDown(false) }} >{`Message ${res.name}`}</div>
+                                            <div className="go-to-chat" onClick={() => { accessChat(res); setShowDropDown(false); setShowFriendDetail(false) }} >{`Message ${res.name}`}</div>
                                             {(selectedChat?.groupAdmin?._id === id) && <div className="remove-from-chat" onClick={() => removeFromGroup(res._id)} >Remove from Chat</div>}
                                         </div>
                                     </div>

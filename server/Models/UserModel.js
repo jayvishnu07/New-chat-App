@@ -9,6 +9,7 @@ const UserSchema = mongoose.Schema({
         type: String,
         default: 'https://freesvg.org/img/abstract-user-flat-4.png',
     },
+    token : { type: String}
 },
     { timestamps: true }
 )

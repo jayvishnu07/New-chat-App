@@ -36,14 +36,14 @@ const getChat = async (req, res) => {
     }
 
 
+    console.log(req.currentUser.id);
+    console.log(oppositeUserId);
     try {
         const createdChat = await ChatModel.create({
             chatName: 'Direct Chat',
             isGroupChat: false,
             users: [req.currentUser.id, oppositeUserId]
         })
-        console.log(req.currentUser.id);
-        console.log(oppositeUserId);
         const wholeChat = await ChatModel.find({ _id: createdChat.id }).populate('users', '-password')
         res.status(200).send(wholeChat)
 

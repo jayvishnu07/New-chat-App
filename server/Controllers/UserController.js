@@ -72,7 +72,7 @@ const searchNewFriends = async (req, res) => {
 
     const keyword = req.query.search;
     try {
-        
+
         if (keyword) {
             const user = await UserModel.find({
                 $or: [
@@ -80,17 +80,32 @@ const searchNewFriends = async (req, res) => {
                     { mail_id: { $regex: keyword, $options: 'i' } }
                 ]
             })
-            .find({ _id: { $ne: req.currentUser.id } })
+                .find({ _id: { $ne: req.currentUser.id } })
 
             console.log('keyword', user);
             res.status(200).send(user)
         }
     } catch (error) {
-        console.log('error from serach user',error.message);
+        console.log('error from serach user', error.message);
     }
 }
 
-module.exports = { registerUser, loginUser, searchNewFriends }
+const changeMyName = async (req, res) => {
+
+    const { userId, newName } = req.body;
+    try {
+        const user = await UserModel.findByIdAndUpdate({ _id: userId }, {
+            name: newName
+        }, { new: true });
+        res.status(200).send(user)
+    } catch (error) {
+        console.log('error from serach user', error.message);
+    }
+}
+
+
+
+module.exports = { registerUser, loginUser, searchNewFriends, changeMyName }
 
 
 

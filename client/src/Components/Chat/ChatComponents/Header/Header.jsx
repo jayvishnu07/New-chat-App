@@ -4,7 +4,7 @@ import { GiMagicHat } from 'react-icons/gi';
 import { BsSearch, BsFillChatRightTextFill } from 'react-icons/bs';
 import { FaUserFriends } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
-import { MdNotifications } from 'react-icons/md';
+import { MdNotifications, MdOutlineDriveFileRenameOutline } from 'react-icons/md';
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -24,7 +24,12 @@ const Header = () => {
     const [searchInput, setSearchInput] = useState('')
     const [show, setShow] = useState(false);
     const [user, setUser] = useState({})
+    const [token, setToken] = useState(JSON.parse(localStorage.getItem('userToken')))
     const navigate = useNavigate()
+    const [newName, setNewName] = useState('');
+    const [newNameModel, setNewNameModel] = useState(false);
+    const [newProfilePic, setNewProfilePic] = useState('');
+    const [newProfilePicModel, setNewProfilePicModel] = useState(false);
     const [newFriends, setNewFriends] = useState([])
     const [groupProfilePic, setGroupProfilePic] = useState('');
     const [groupName, setGroupName] = useState('');
@@ -41,11 +46,12 @@ const Header = () => {
         setUser(JSON.parse(localStorage.getItem('userInfo')))
     }, [])
 
-    const { id, name, mail_id, profilePic, token } = user;
+    const { id, name, mail_id, profilePic } = user;
 
     //LOGOUT LOGIC
     const handleLogout = () => {
-        localStorage.removeItem('userInfo')
+        localStorage.removeItem('userInfo');
+        localStorage.removeItem('userToken');
         navigate('/auth')
         toast.success('🦄 Logout Successful!', {
             position: "top-center",
@@ -59,6 +65,9 @@ const Header = () => {
         });
     }
 
+    useEffect(()=>{
+        console.log(token);
+    })
 
     const onclose = () => {
         setShowSearchFriends(false);
@@ -84,7 +93,7 @@ const Header = () => {
         }
     }
 
-    const accessChat = async (oppositeUser) => {
+    const accessChat = async (oppositeUser) => {    
         const oppositeUserId = oppositeUser._id;
         try {
             const config = {
@@ -110,8 +119,8 @@ const Header = () => {
         }
 
         setNewlyAddedFriendsObject([...newlyAddedFriendsObject, newUser])
-        console.log("created chat",[...newlyAddedFriendsObject, newUser]);
-        console.log('newlyAddedFriends',newlyAddedFriends);
+        console.log("created chat", [...newlyAddedFriendsObject, newUser]);
+        console.log('newlyAddedFriends', newlyAddedFriends);
     }
 
     const profilePicHandler = (pic) => {
@@ -199,6 +208,54 @@ const Header = () => {
         setNewlyAddedFriendsObject(newlyAddedFriendsObject.filter(e => e._id !== userId))
     }
 
+    const changeMyProfilePic = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const info = {
+                chatId: selectedChat._id,
+            }
+
+            const { data } = await axios.put(`http://localhost:8080/user/change-profilePic/`, info, config);
+            const stringified = JSON.stringify(data);
+            localStorage.setItem('userInfo', stringified);
+            setUser(data)
+        } catch (error) {
+            //toast
+            console.log(error.message);
+        }
+    }
+
+    const changeMyName = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const info = {
+                userId: id,
+                newName
+            }
+            const { data } = await axios.put(`http://localhost:8080/user/change-name/`, info, config)
+            const stringified = JSON.stringify(data);
+            localStorage.setItem('userInfo', stringified);
+            console.log('--------------------', data);
+            setUser(data)
+            setNewNameModel(false)
+        } catch (error) {
+            //toast
+            console.log(error.message);
+        }
+    }
+
     return (
         <div className="chat-component-header">
             <div className="left-header-features-wrapper">
@@ -268,7 +325,7 @@ const Header = () => {
                             <Button variant="secondary" onClick={() => { setShowCreateChatModel(false); setNewFriends([]); setNewlyAddedFriendsObject([]) }}>
                                 Close
                             </Button>
-                            <Button variant="primary" onClick={()=>{createGroupChat();setNewFriends([]);setNewlyAddedFriendsObject([])}}>
+                            <Button variant="primary" onClick={() => { createGroupChat(); setNewFriends([]); setNewlyAddedFriendsObject([]) }}>
                                 Create
                             </Button>
                         </Modal.Footer>
@@ -291,10 +348,10 @@ const Header = () => {
                         keyboard={false}
                     >
                         <Modal.Header closeButton className='model-header' >
-                            <Modal.Title>{name}</Modal.Title>
+                            <Modal.Title>{name} <MdOutlineDriveFileRenameOutline onClick={() => { setNewNameModel(prev => !prev); handleClose() }} className='header-edit-icon' id='cursor' size={25} /></Modal.Title>
                         </Modal.Header>
                         <Modal.Body className='model-body' >
-                            <img id='proflie-in-model' src={profilePic} alt="proflie" />
+                            <img id='proflie-in-model' src={profilePic} alt="proflie" onClick={changeMyProfilePic} />
                             <div className="model-body-mail_id">{mail_id}</div>
                         </Modal.Body>
                         <Modal.Footer className='model-footer' >
@@ -304,6 +361,27 @@ const Header = () => {
                             <Button variant="danger" onClick={handleLogout}>
                                 Logout
                             </Button>
+                        </Modal.Footer>
+                    </Modal>
+
+                    {/* CHANGE NAME MODEL */}
+                    <Modal
+                        show={newNameModel}
+                        onHide={() => setNewNameModel(false)}
+                        backdrop="static"
+                        keyboard={false}
+                    >
+                        <Modal.Header >
+                            <Modal.Title>Change your Name</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <input onChange={(e) => { setNewName(e.target.value) }} type="text" placeholder='Enter new name...' />
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setNewNameModel(false)}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={changeMyName} >Change</Button>
                         </Modal.Footer>
                     </Modal>
                 </div>

@@ -13,11 +13,6 @@ const ChatContextProvider = ({ children }) => {
         if (!user) { navigate('/auth') }
     }, [navigate])
 
-    useEffect(()=>{
-        console.log('selectedChat',selectedChat);
-        console.log('currentChat',currentChat);
-    },[selectedChat])
-
     return (
         <chatContext.Provider value={{ user, setUser, selectedChat, setSelectedChat, currentChat, setCurrentChat }}>{children}</chatContext.Provider>
     )

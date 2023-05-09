@@ -10,6 +10,7 @@ import { EntireChatState } from '../../../../ContextAPI/chatContext';
 
 const ChatBox = () => {
     const { setSelectedChat, selectedChat, currentChat, setCurrentChat } = EntireChatState()
+    const [token, setToken] = useState(JSON.parse(localStorage.getItem('userToken')))
     const [user, setUser] = useState({})
     const [showFriendDetail, setShowFriendDetail] = useState(false)
     const [render, setRender] = useState(false)
@@ -20,7 +21,7 @@ const ChatBox = () => {
         setUser(JSON.parse(localStorage.getItem('userInfo')))
     }, [])
 
-    const { id, name, mail_id, profilePic, token } = user;
+    const { id, name, mail_id, profilePic,  } = user;
 
 
     const getAllChats = async () => {
@@ -123,7 +124,7 @@ const ChatBox = () => {
                         <div className="chat-box-input-bottom-border"></div>
                     </div>
                 </div>
-               {showFriendDetail && <UserDetailsSidebar user chatInfo={ selectedChat.users ?  (!selectedChat.isGroupChat) ? getSender(selectedChat.users) : selectedChat : selectedChat} setShowFriendDetail={setShowFriendDetail}  />}
+               {showFriendDetail && <UserDetailsSidebar user chatInfo={ selectedChat.users ?  (!selectedChat.isGroupChat) ? getSender(selectedChat.users) : selectedChat : selectedChat} setShowFriendDetail={setShowFriendDetail} />}
             </div>
             <div className={!selectedChat._id ? 'no-chat-notify' : 'none'} >
                 <GiMagicHat size={50} />
