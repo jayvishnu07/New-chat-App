@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const userRoute = require('./Routers/userRoute')
 const chatRoute = require('./Routers/chatRoute')
+const messageRoute = require('./Routers/messageRoute')
 const { notFound, errorHandler } = require('./config/middleware/errorHandler');
 const cors = require('cors');
 app.use(cors())
@@ -20,6 +21,7 @@ mongoose.connect('mongodb://localhost/Chat_Application')
 
 app.use('/user', userRoute)
 app.use('/api', chatRoute)
+app.use('/messages', messageRoute)
 
 app.get('/', (req, res) => {
     res.send("hello world")
