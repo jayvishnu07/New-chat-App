@@ -17,15 +17,15 @@ const allMessages = asyncHandler(async (req, res) => {
 
 const sendMessage = asyncHandler(async (req, res) => {
     const { content, chatId } = req.body;
-    console.log("here" + req.user);
+    console.log("here" + req.currentUser.id);
     if (!content || !chatId) {
         console.log("Invalid data passed into request");
         return res.sendStatus(400);
     }
 
     var newMessage = {
-        sender: req.currentUser._id,
-        content: content,
+        sender: req.currentUser.id,
+        textMessage: content,
         chat: chatId,
     };
 
@@ -39,7 +39,7 @@ const sendMessage = asyncHandler(async (req, res) => {
             select: "name pic email",
         });
 
-        await Chat.findByIdAndUpdate(req.body.chatId, { latestMessage: message });
+        await Chat.findByIdAndUpdate(req.body.chatId, { recentMessage: message });
 
         res.json(message);
     } catch (error) {

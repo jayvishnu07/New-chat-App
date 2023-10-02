@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { HiChevronDoubleLeft } from 'react-icons/hi';
-import { MdOutlineDriveFileRenameOutline } from 'react-icons/md';
-import './UserDetailsSidebar.css'
-import './UserDetailsHeader.css'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { EntireChatState } from '../../ContextAPI/chatContext';
-import axios from 'axios'
-import { toast } from 'react-toastify';
-import ScaleLoader from 'react-spinners/ScaleLoader';
-import { BsSearch } from 'react-icons/bs';
-import SearchNewFriends from '../Chat/SearchNewFriends';
-import { IoMdClose } from 'react-icons/io';
-import { GiExitDoor } from 'react-icons/gi';
 import { AiFillDelete } from 'react-icons/ai';
+import { BsSearch } from 'react-icons/bs';
+import { GiExitDoor } from 'react-icons/gi';
+import { HiChevronDoubleLeft } from 'react-icons/hi';
+import { IoMdClose } from 'react-icons/io';
+import { MdOutlineDriveFileRenameOutline } from 'react-icons/md';
+import ScaleLoader from 'react-spinners/ScaleLoader';
+import { toast } from 'react-toastify';
+import { EntireChatState } from '../../ContextAPI/chatContext';
+import SearchNewFriends from '../Chat/SearchNewFriends';
+import './UserDetailsHeader.css';
+import './UserDetailsSidebar.css';
 
 
 const UserDetailsHeader = ({ setShowFriendDetail }) => {
@@ -145,7 +145,6 @@ const UserDetailsHeader = ({ setShowFriendDetail }) => {
                 .then((res) => res.json())
                 .then((data) => {
                     setGroupProfilePic(data.url.toString());
-                    console.log(data.url.toString());
                     setPicLoading(false);
                 })
                 .catch((err) => {
@@ -166,7 +165,6 @@ const UserDetailsHeader = ({ setShowFriendDetail }) => {
             setPicLoading(false);
             return;
         }
-        console.log(pic);
     }
 
     const editChatProfile = async () => {

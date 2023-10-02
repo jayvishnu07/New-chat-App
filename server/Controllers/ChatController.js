@@ -25,10 +25,16 @@ const getChat = async (req, res) => {
 
     console.log('chat.length', chat);
     if (chat) {
+
         chat = await UserModel.populate(chat, {
             path: 'recentMessage.sender',
             select: 'name mail_id profilePic'
         })
+
+        isChat = await User.populate(isChat, {
+            path: "latestMessage.sender",
+            select: "name pic email",
+        });
         console.log('chat.length', chat.length);
         if (chat.length > 0) {
             return res.status(200).send(chat[0])
@@ -190,13 +196,13 @@ const editChatMembers = async (req, res) => {
             { new: true })
             .populate('users', '-password')
             .populate('groupAdmin', '-password')
-    
+
         if (!group) {
             return res.status(404).send("Group Not Found")
         }
         console.log('Edited group', group);
         res.status(200).send(group)
-        
+
     } catch (error) {
         console.log('error from editChatMembers', error.message);
 
@@ -218,12 +224,12 @@ const removeFriendFromGroup = async (req, res) => {
 }
 
 const exitFromGroup = async (req, res) => {
-    const { chatId, idOfUserToBeRemoved , newAdminId } = req.body;
+    const { chatId, idOfUserToBeRemoved, newAdminId } = req.body;
 
-    const group = await ChatModel.findByIdAndUpdate(chatId, 
-        { 
+    const group = await ChatModel.findByIdAndUpdate(chatId,
+        {
             $pull: { users: idOfUserToBeRemoved },
-            groupAdmin : newAdminId
+            groupAdmin: newAdminId
         }, { new: true })
         .populate('users', '-password')
         .populate('groupAdmin', '-password')
@@ -242,7 +248,7 @@ const deleteGroup = async (req, res) => {
     if (!group) {
         return res.status(404).send("Group Not Found")
     }
-    console.log('deleted group',group);
+    console.log('deleted group', group);
     res.status(200).send(group)
 }
 

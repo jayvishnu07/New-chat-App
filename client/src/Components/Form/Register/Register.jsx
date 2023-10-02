@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import './Register.css'
 import axios from 'axios';
-import { toast } from 'react-toastify';
-import ScaleLoader from "react-spinners/ScaleLoader";
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ScaleLoader from "react-spinners/ScaleLoader";
+import { toast } from 'react-toastify';
+import './Register.css';
 
 
 
@@ -43,8 +43,6 @@ const Register = () => {
       });
       return;
     }
-
-    console.log(pic);
     if (pic.type === "image/jpeg" || pic.type === "image/png") {
       const data = new FormData();
       data.append("file", pic);
@@ -130,7 +128,6 @@ const Register = () => {
         localStorage.setItem('userInfo', stringified)
         localStorage.setItem('userToken', stringifiedToken)
         navigate('/chats')
-        console.log("success");
       })
       .catch((error) => { //Take care of error prop
         toast.error('🦄 Something went wrong while registration!', {

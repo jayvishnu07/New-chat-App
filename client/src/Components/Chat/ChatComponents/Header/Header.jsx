@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import './Header.css'
-import { GiMagicHat } from 'react-icons/gi';
-import { BsSearch, BsFillChatRightTextFill } from 'react-icons/bs';
+import React, { useEffect, useState } from 'react';
+import { BsFillChatRightTextFill, BsSearch } from 'react-icons/bs';
 import { FaUserFriends } from 'react-icons/fa';
+import { GiMagicHat } from 'react-icons/gi';
 import { IoMdClose } from 'react-icons/io';
 import { MdNotifications, MdOutlineDriveFileRenameOutline } from 'react-icons/md';
+import './Header.css';
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 
+import axios from 'axios';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import SearchNewFriends from '../../SearchNewFriends';
-import ScaleLoader from 'react-spinners/ScaleLoader';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
+import ScaleLoader from 'react-spinners/ScaleLoader';
 import { EntireChatState } from '../../../../ContextAPI/chatContext';
+import SearchNewFriends from '../../SearchNewFriends';
 
 
 
@@ -65,7 +65,7 @@ const Header = () => {
         });
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(token);
     })
 
@@ -93,7 +93,7 @@ const Header = () => {
         }
     }
 
-    const accessChat = async (oppositeUser) => {    
+    const accessChat = async (oppositeUser) => {
         const oppositeUserId = oppositeUser._id;
         try {
             const config = {
@@ -119,8 +119,6 @@ const Header = () => {
         }
 
         setNewlyAddedFriendsObject([...newlyAddedFriendsObject, newUser])
-        console.log("created chat", [...newlyAddedFriendsObject, newUser]);
-        console.log('newlyAddedFriends', newlyAddedFriends);
     }
 
     const profilePicHandler = (pic) => {
@@ -157,7 +155,6 @@ const Header = () => {
                     setPicLoading(false);
                 })
                 .catch((err) => {
-                    console.log(err);
                     setPicLoading(false);
                 });
         } else {
@@ -247,7 +244,6 @@ const Header = () => {
             const { data } = await axios.put(`http://localhost:8080/user/change-name/`, info, config)
             const stringified = JSON.stringify(data);
             localStorage.setItem('userInfo', stringified);
-            console.log('--------------------', data);
             setUser(data)
             setNewNameModel(false)
         } catch (error) {
