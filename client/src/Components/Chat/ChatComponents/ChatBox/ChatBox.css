@@ -53,7 +53,7 @@
     margin-top: 10px;
     height: 80vh;
     width: 100%;
-    color: #fff;
+    color: #f2f2f2;
     margin: auto;
     overflow-y: scroll;
 }
@@ -155,7 +155,7 @@
 .friends-list-div {
     height: 86vh;
     width: 100%;
-    color: #fff;
+    color: #f2f2f2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -186,20 +186,19 @@
 
 
 .chat-and-user-detail-wrapper-main {
-    background-color: #5C5470;
     width: 75%;
     display: flex;
     justify-content: space-between;
-    color: #fff;
+    background-color: #F2F2F2;
 }
 
 .chat-box-main-div {
-
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    color: #fff;
+    color: #f2f2f2;
+    background-color: #5C5470;
 }
 
 .fellow-user-details-header {
@@ -207,7 +206,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 50px 0 30px;
+    padding: 0 0px 0 30px;
+    background-color: #5C5470;
 }
 
 .chat-box-feature-left {
@@ -219,18 +219,26 @@
 
 
 .main-chat-box {
-    background-color: #DBD8E3;
-    flex: 1;
-    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+    background-color: #5C5470;
+    height: 85%;
+}
+.main-chat-box::-webkit-scrollbar{
+    display: none;
 }
 
 .chat-box-input-wrapper {
-    height: 6vh;
+    height: 8vh;
 }
 
 .chat-box-input-box {
-    height: 5vh;
+    height: 8vh;
     display: flex;
+    background-color: #2A2438;
+    padding: 10px;
+    color: #f2f2f2;
+}
+.chat-box-input-box input::-webkit-input-placeholder{
+    color: #f2f2f2;
 }
 
 .chat-box-input-box input {
@@ -241,6 +249,8 @@
     padding: 0 20px 0 20px;
     font-weight: bold;
     font-size: 15px;
+    background-color: #5C5470;
+    border-radius: 5px;
 }
 
 .send-logo-div {
@@ -251,11 +261,7 @@
     justify-content: center;
     gap: 10px;
     font-weight: bold;
-}
-
-.chat-box-input-bottom-border {
-    background-color: #2A2438;
-    height: 1vh;
+    background-color: transparent;
 }
 
 .no-chat-notify {
@@ -266,7 +272,7 @@
     flex: 75%;
     height: 100%;
     background-color: #5C5470;
-    color: #fff;
+    color: #f2f2f2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -294,4 +300,23 @@
     width: max-content;
     padding: 0px 10px;
     border-radius: 5px;
+}
+
+.main-content{
+    height: 100%;
+    padding: 20px 10px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+}
+
+.main-content::-webkit-scrollbar{
+    display: none;
+}
+
+.chat-display-item{
+    display: flex;
+    align-items: flex-end;
 }

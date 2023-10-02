@@ -7,11 +7,15 @@ import { toast } from 'react-toastify';
 import { EntireChatState } from '../../../../ContextAPI/chatContext';
 import UserDetailsSidebar from '../../../UserDetailsSidebar/UserDetailsSidebar';
 
+import io from "socket.io-client";
 import './ChatBox.css';
 import SingleChat from './SingleChat';
 
+const ENDPOINT = "http://localhost:8080";
+var socket, selectedChatCompare;
+
 const ChatBox = () => {
-  const { setSelectedChat, selectedChat, currentChat, setCurrentChat } = EntireChatState()
+  const { setSelectedChat, selectedChat, currentChat, setCurrentChat, notification, setNotification, fetchAgain, setFetchAgain } = EntireChatState()
   const [token, setToken] = useState(JSON.parse(localStorage.getItem('userToken')))
   const [user, setUser] = useState({})
   const [showFriendDetail, setShowFriendDetail] = useState(false)
@@ -21,6 +25,9 @@ const ChatBox = () => {
   const [newMessage, setNewMessage] = useState('')
   const [messages, setMessages] = useState([])
   let sender;
+  const [socketConnected, setSocketConnected] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [istyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('userInfo')))
@@ -75,7 +82,7 @@ const ChatBox = () => {
         },
         config
       );
-      // socket.emit("new message", data);
+      socket.emit("new message", data);
       setMessages([...messages, data]);
     } catch (error) {
       toast({
@@ -91,7 +98,22 @@ const ChatBox = () => {
   const handleNewMessage = (e) => {
     setNewMessage(e.target.value)
 
-    //typing logics
+    if (!socketConnected) return;
+
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", selectedChat._id);
+    }
+    let lastTypingTime = new Date().getTime();
+    var timerLength = 3000;
+    setTimeout(() => {
+      var timeNow = new Date().getTime();
+      var timeDiff = timeNow - lastTypingTime;
+      if (timeDiff >= timerLength && typing) {
+        socket.emit("stop typing", selectedChat._id);
+        setTyping(false);
+      }
+    }, timerLength);
   }
 
 
@@ -114,7 +136,8 @@ const ChatBox = () => {
       setMessages(data);
       //   setLoading(false);
 
-      //   socket.emit("join chat", selectedChat._id);
+
+      socket.emit("join chat", selectedChat._id);
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -128,6 +151,40 @@ const ChatBox = () => {
   };
 
 
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connected", () => setSocketConnected(true));
+    socket.on("typing", () => setIsTyping(true));
+    socket.on("stop typing", () => setIsTyping(false));
+
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    fetchMessages();
+
+    selectedChatCompare = selectedChat;
+    // eslint-disable-next-line
+  }, [selectedChat]);
+
+  useEffect(() => {
+    socket.on("message recieved", (newMessageRecieved) => {
+      console.log("newMessageRecieved", newMessageRecieved);
+      if (
+        !selectedChatCompare || // if chat is not selected or doesn't match current chat
+        selectedChatCompare._id !== newMessageRecieved.chat._id
+      ) {
+        if (!notification.includes(newMessageRecieved)) {
+          console.log("notification");
+          setNotification([newMessageRecieved, ...notification]);
+          setFetchAgain(!fetchAgain);
+        }
+      } else {
+        setMessages([...messages, newMessageRecieved]);
+      }
+    });
+  });
 
 
   useEffect(() => {
@@ -189,11 +246,13 @@ const ChatBox = () => {
               {selectedChat?.users ? (!selectedChat?.isGroupChat ? getSender(selectedChat?.users)?.name : selectedChat?.chatName) : selectedChat?.name}
             </div>
           </div>
+          <hr style={{ width: "100%", color: "#fff", marginBlockStart: "0", marginBlockEnd: "0" }} />
           <div className="main-chat-box">
 
             <SingleChat messages={messages} />
 
           </div>
+          {istyping ? <div style={{ color: "#000" }} >Loading</div> : <></>}
           <div className="chat-box-input-wrapper">
             <div className="chat-box-input-box">
               <input type="text" onChange={handleNewMessage} value={newMessage} placeholder='Type your message here . . .' />
@@ -202,7 +261,6 @@ const ChatBox = () => {
                 <AiOutlineSend size={30} fill='#fff' />
               </div>
             </div>
-            <div className="chat-box-input-bottom-border"></div>
           </div>
         </div>
         {showFriendDetail && <UserDetailsSidebar user chatInfo={selectedChat.users ? (!selectedChat.isGroupChat) ? getSender(selectedChat.users) : selectedChat : selectedChat} setShowFriendDetail={setShowFriendDetail} />}

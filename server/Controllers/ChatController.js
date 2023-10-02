@@ -31,9 +31,9 @@ const getChat = async (req, res) => {
             select: 'name mail_id profilePic'
         })
 
-        isChat = await User.populate(isChat, {
+        Chat = await User.populate(isChat, {
             path: "latestMessage.sender",
-            select: "name pic email",
+            select: "name profilePic mail_id",
         });
         console.log('chat.length', chat.length);
         if (chat.length > 0) {

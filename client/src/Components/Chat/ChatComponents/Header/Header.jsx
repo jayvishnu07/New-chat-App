@@ -3,7 +3,7 @@ import { BsFillChatRightTextFill, BsSearch } from 'react-icons/bs';
 import { FaUserFriends } from 'react-icons/fa';
 import { GiMagicHat } from 'react-icons/gi';
 import { IoMdClose } from 'react-icons/io';
-import { MdNotifications, MdOutlineDriveFileRenameOutline } from 'react-icons/md';
+import { MdNotifications, MdNotificationsActive, MdOutlineDriveFileRenameOutline } from 'react-icons/md';
 import './Header.css';
 
 import Button from 'react-bootstrap/Button';
@@ -40,7 +40,7 @@ const Header = () => {
     const [newlyAddedFriendsObject, setNewlyAddedFriendsObject] = useState([]);
 
 
-    const { setSelectedChat, selectedChat } = EntireChatState()
+    const { setSelectedChat, selectedChat, notification, setNotification } = EntireChatState()
 
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('userInfo')))
@@ -326,7 +326,8 @@ const Header = () => {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-                    <MdNotifications size={25} id='cursor' />
+                    {!notification.length == 0 ? <MdNotificationsActive onClick={() => { setNotification([]) }} color='red' size={25} id='cursor' /> : <MdNotifications size={25} id='cursor' />}
+
                 </div>
             </div>
             <div className="righ-header-features-wrapper">

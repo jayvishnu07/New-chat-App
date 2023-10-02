@@ -1,47 +1,39 @@
-import React from 'react';
-import { EntireChatState } from '../../../../ContextAPI/chatContext';
+import React, { useEffect, useState } from 'react';
+import './ChatBox.css';
 import { isLastMessage, isSameSender, isSameSenderMargin, isSameUser } from './ChatLogics';
-
 const SingleChat = ({ messages }) => {
-  const { user } = EntireChatState();
+  const [user, setUser] = useState({})
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('userInfo')))
+  }, [])
+
   return (
-    <div>
+    <div className='main-content'  >
       {messages &&
         messages.map((m, i) => (
-          <div style={{ display: "flex" }} key={m.id}>
+          <div className='chat-display-item' key={m.id}>
             {(isSameSender(messages, m, i, user.id) ||
-              isLastMessage(messages, i, user.id)) && (<></>
-                // <Tooltip label={m.sender.name} placement="bottom-start" hasArrow>
-                //   <Avatar
-                //     mt="7px"
-                //     mr={1}
-                //     size="sm"
-                //     cursor="pointer"
-                //     name={m.sender.name}
-                //     src={m.sender.pic}
-                //   />
-                // </Tooltip>
+              isLastMessage(messages, i, user.id)) && (
+                <img id='cursor' style={{ width: "35px", height: "35px", borderRadius: "50%", marginRight: "5px" }} src={m.sender.profilePic} alt="proflie" />
               )}
-            {
-              console.log("true or false", m.sender._id === user.id, m.sender._id, "==", user.id)
-            }
             <span
               style={{
-                backgroundColor: `${m.sender._id === user.id ? "blue" : "green"
+                backgroundColor: `${m.sender._id === user.id ? "#30294294" : "#302942"
                   }`,
                 marginLeft: isSameSenderMargin(messages, m, i, user.id),
                 marginTop: isSameUser(messages, m, i, user.id) ? 3 : 10,
-                borderRadius: "20px",
+                borderRadius: "5px",
                 padding: "5px 15px",
                 maxWidth: "75%",
-                color: "#000"
+                color: "#fff",
               }}
             >
               {m.textMessage}
             </span>
           </div>
-        ))}
-    </div>
+        ))
+      }
+    </div >
   )
 }
 
