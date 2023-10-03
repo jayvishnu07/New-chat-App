@@ -3,7 +3,7 @@ import { BsFillChatRightTextFill, BsSearch } from 'react-icons/bs';
 import { FaUserFriends } from 'react-icons/fa';
 import { GiMagicHat } from 'react-icons/gi';
 import { IoMdClose } from 'react-icons/io';
-import { MdNotifications, MdNotificationsActive, MdOutlineDriveFileRenameOutline } from 'react-icons/md';
+import { MdNotifications, MdOutlineDriveFileRenameOutline } from 'react-icons/md';
 import './Header.css';
 
 import Button from 'react-bootstrap/Button';
@@ -17,7 +17,7 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 import { EntireChatState } from '../../../../ContextAPI/chatContext';
 import SearchNewFriends from '../../SearchNewFriends';
 
-
+import NotificationBadge, { Effect } from 'react-notification-badge';
 
 
 const Header = () => {
@@ -326,7 +326,11 @@ const Header = () => {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-                    {!notification.length == 0 ? <MdNotificationsActive onClick={() => { setNotification([]) }} color='red' size={25} id='cursor' /> : <MdNotifications size={25} id='cursor' />}
+                    <div>
+                        <NotificationBadge count={notification.length} effect={Effect.SCALE} />
+                        <MdNotifications size={25} id='cursor' />
+                    </div>
+
 
                 </div>
             </div>
@@ -388,3 +392,4 @@ const Header = () => {
 }
 
 export default Header
+

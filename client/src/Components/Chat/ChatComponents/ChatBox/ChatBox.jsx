@@ -1,15 +1,16 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
 import { BsSearch } from 'react-icons/bs';
 import { GiMagicHat } from 'react-icons/gi';
+import { StageSpinner } from 'react-spinners-kit';
 import { toast } from 'react-toastify';
+import io from "socket.io-client";
 import { EntireChatState } from '../../../../ContextAPI/chatContext';
 import UserDetailsSidebar from '../../../UserDetailsSidebar/UserDetailsSidebar';
-
-import io from "socket.io-client";
 import './ChatBox.css';
 import SingleChat from './SingleChat';
+
 
 const ENDPOINT = "http://localhost:8080";
 var socket, selectedChatCompare;
@@ -28,6 +29,10 @@ const ChatBox = () => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
+  const [extraScroll, setExtraScroll] = useState(0);
+
+  const messagesRef = useRef(null);
+
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('userInfo')))
@@ -186,10 +191,17 @@ const ChatBox = () => {
     });
   });
 
-
   useEffect(() => {
-    setCurrentChat(currentChat.filter(e => e._id !== id))
-  }, [])
+    if (messagesRef.current) {
+      // Calculate the extra scroll based on the typing state
+      const additionalScroll = typing ? 40 : 0;
+      setExtraScroll(additionalScroll);
+
+      // Scroll to the bottom with extra scroll
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight + additionalScroll;
+      console.log("additionalScroll", additionalScroll);
+    }
+  }, [messages, typing]);
 
 
 
@@ -224,7 +236,7 @@ const ChatBox = () => {
                     <div className="new-friends-list-item">
                       {res.isGroupChat ? res.chatName : getSender(res.users)?.name}
                       <br />
-                      {`latest message`}
+                      <div className='latest-msg-div' >{res?.recentMessage?.textMessage}</div>
                     </div>
                   </div>
                   <div className="friends-list-item-bottom-border"></div>
@@ -247,15 +259,13 @@ const ChatBox = () => {
             </div>
           </div>
           <hr style={{ width: "100%", color: "#fff", marginBlockStart: "0", marginBlockEnd: "0" }} />
-          <div className="main-chat-box">
-
+          <div className="main-chat-box" ref={messagesRef}>
             <SingleChat messages={messages} />
-
+            {istyping && <div className='typing-div' ><StageSpinner size={50} color="#2A2438" /></div>}
           </div>
-          {istyping ? <div style={{ color: "#000" }} >Loading</div> : <></>}
           <div className="chat-box-input-wrapper">
             <div className="chat-box-input-box">
-              <input type="text" onChange={handleNewMessage} value={newMessage} placeholder='Type your message here . . .' />
+              <input type="text" onChange={handleNewMessage} value={newMessage} onKeyDown={(e) => { e.key == "Enter" && handleSendMessage() }} placeholder='Type your message here . . .' />
               <div className="send-logo-div" onClick={handleSendMessage} >
                 send
                 <AiOutlineSend size={30} fill='#fff' />

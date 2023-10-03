@@ -80,7 +80,7 @@
 }
 
 
-.friends-list-wrapper-selected{
+.friends-list-wrapper-selected {
     background-color: #2A2438;
     width: 100%;
     display: flex;
@@ -93,7 +93,7 @@
 .new-friends-list-item {
     width: 100%;
     height: 10vh;
-    padding: 10px 20px 10px;    
+    padding: 10px 20px 10px;
 }
 
 .new-friends-list-item-wrapper {
@@ -161,10 +161,10 @@
     align-items: center;
     justify-content: flex-start;
     overflow-y: scroll;
-    background-color: #352F44 ;
+    background-color: #352F44;
 }
 
-.friends-list-div::-webkit-scrollbar{
+.friends-list-div::-webkit-scrollbar {
     display: none;
 }
 
@@ -219,10 +219,12 @@
 
 
 .main-chat-box {
-    background-color: #5C5470;
+    background-color: #f2f2f2;
     height: 85%;
+    overflow-y: scroll;
 }
-.main-chat-box::-webkit-scrollbar{
+
+.main-chat-box::-webkit-scrollbar {
     display: none;
 }
 
@@ -237,7 +239,8 @@
     padding: 10px;
     color: #f2f2f2;
 }
-.chat-box-input-box input::-webkit-input-placeholder{
+
+.chat-box-input-box input::-webkit-input-placeholder {
     color: #f2f2f2;
 }
 
@@ -251,6 +254,7 @@
     font-size: 15px;
     background-color: #5C5470;
     border-radius: 5px;
+    color: #F2F2F2;
 }
 
 .send-logo-div {
@@ -302,21 +306,41 @@
     border-radius: 5px;
 }
 
-.main-content{
-    height: 100%;
+.main-content {
     padding: 20px 10px;
-    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    overflow-y: scroll;
 
 }
 
-.main-content::-webkit-scrollbar{
+.main-content::-webkit-scrollbar {
     display: none;
 }
 
-.chat-display-item{
+.chat-display-item {
     display: flex;
     align-items: flex-end;
+
+}
+
+.chat-display-item span {
+    max-width: 350px;
+}
+
+
+.typing-div {
+    background-color: #f2f2f2;
+    padding: 0 10px;
+    height: 40px;
+    overflow: hidden;
+}
+
+
+.latest-msg-div {
+    max-width: 15vw;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

@@ -7,6 +7,7 @@ const SingleChat = ({ messages }) => {
     setUser(JSON.parse(localStorage.getItem('userInfo')))
   }, [])
 
+
   return (
     <div className='main-content'  >
       {messages &&
