@@ -6,7 +6,11 @@ const MessageSchema = mongoose.Schema({
     chat: { type: mongoose.Schema.Types.ObjectId, ref: 'Chat' },
     readBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 },
-    { timestamps: true }
+    {
+        timestamps: {
+            currentTime: () => new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }),
+        }
+    }
 )
 
 const MessageModel = mongoose.model('Message', MessageSchema);

@@ -63,11 +63,12 @@
 }
 
 .new-friends-list-profile {
-    width: 3vw;
+    width: 50px;
     aspect-ratio: 1;
     margin-bottom: 2px;
     border-radius: 50%;
     cursor: pointer;
+
 }
 
 .friends-list-wrapper {
@@ -93,8 +94,17 @@
 .new-friends-list-item {
     width: 100%;
     height: 10vh;
-    padding: 10px 20px 10px;
+    padding: 10px;
     font-weight: 600;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.name-with-notification{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 110%;
 }
 
 .new-friends-list-item-wrapper {
@@ -347,4 +357,28 @@
     text-overflow: ellipsis;
     font-weight: 600;
     color: rgb(159, 159, 159);
+}
+
+.sender-name{
+    font-size: 12px;
+    color: rgb(159, 159, 159);  
+    font-weight: 600; 
+
+}
+
+.sender-content{
+    color: "#fff";
+    font-weight: "600";
+    user-select: 'text';
+    padding: 5px 55px 5px 5px;
+    font-weight: 600; 
+
+}
+.sender-time{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 12px;
+    color: rgb(159, 159, 159);  
+    font-weight: 600; 
 }

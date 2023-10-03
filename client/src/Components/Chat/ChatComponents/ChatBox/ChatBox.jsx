@@ -233,8 +233,9 @@ const ChatBox = () => {
                   <div className="new-friends-list-item-wrapper-main"  >
                     <img id='cursor' src={res.isGroupChat ? res.groupProfile : getSender(res.users)?.profilePic} className='new-friends-list-profile' alt="proflie" />
                     <div className="new-friends-list-item">
-                      {res.isGroupChat ? res.chatName : getSender(res.users)?.name}
-                      <br />
+                      <div className='name-with-notification' >
+                        <span >{res.isGroupChat ? res.chatName : getSender(res.users)?.name}</span>
+                      </div>
                       <div className='latest-msg-div' >{`~ : ${res?.recentMessage?.textMessage ? res?.recentMessage?.textMessage : 'No messages'}`}</div>
                     </div>
                   </div>

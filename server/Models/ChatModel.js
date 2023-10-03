@@ -11,7 +11,11 @@ const ChatSchema = mongoose.Schema({
         default: 'https://freesvg.org/img/abstract-user-flat-4.png',
     },
 },
-    { timestamps: true }
+    {
+        timestamps: {
+            currentTime: () => new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }),
+        }
+    }
 )
 
 const ChatModel = mongoose.model('Chat', ChatSchema);

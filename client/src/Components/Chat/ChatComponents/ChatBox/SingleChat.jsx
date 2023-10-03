@@ -2,6 +2,17 @@ import React, { useEffect, useState } from 'react';
 import './ChatBox.css';
 import { isLastMessage, isSameSender, isSameSenderMargin, isSameUser } from './ChatLogics';
 const SingleChat = ({ messages }) => {
+
+  function formatTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
+    return formattedTime;
+  }
   const [user, setUser] = useState({})
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('userInfo')))
@@ -15,24 +26,40 @@ const SingleChat = ({ messages }) => {
           <div className='chat-display-item' key={m.id}>
             {(isSameSender(messages, m, i, user.id) ||
               isLastMessage(messages, i, user.id)) && (
-                <img id='cursor' style={{ width: "35px", height: "35px", borderRadius: "50%", marginRight: "5px" }} src={m.sender.profilePic} alt="proflie" />
+                <img id='cursor' style={{ width: "35px", height: "35px", borderRadius: "50%" }} src={m.sender.profilePic} alt="proflie" />
               )}
+
+            {console.log(m)}
             <span
               style={{
-                backgroundColor: `${m.sender._id === user.id ? "#30294294" : "#302942"
+                backgroundColor: `${m.sender._id === user.id ? "#5C5470" : "#302942"
                   }`,
                 marginLeft: isSameSenderMargin(messages, m, i, user.id),
                 marginTop: isSameUser(messages, m, i, user.id) ? 3 : 10,
                 borderRadius: "5px",
-                padding: "5px 10px 10px 15px",
-                maxWidth: "75%",
-                color: "#fff",
-                fontWeight: "600",
+                padding: "5px 10px",
                 userSelect: 'text',
-                clipPath: user.id == m.sender._id ? `polygon(0% 0%, 100% 0%, 100% 75%, 100% 99.5%, 95% 90%, 0% 89.5%, 0.1% 89.3%)` : `polygon(0% 0%, 100% 0%, 99.9% 90.3%, 5.6% 89%, 0% 100%, 0% 100%, 0.3% 75.3%)`
+                maxWidth: "37vw"
               }}
             >
-              {m.textMessage}
+              {
+                (isSameSender(messages, m, i, user.id) || isLastMessage(messages, i, user.id)) &&
+                <>
+                  <span className='sender-name' >
+                    ~ {m.sender.name}
+                  </span>
+                  <br />
+                </>
+              }
+              <span className='sender-content' >
+                {m.textMessage}
+              </span>
+              <br />
+              <span className='sender-time' >
+                {
+                  `${formatTimestamp(m.createdAt)}`
+                }
+              </span>
             </span>
           </div>
         ))

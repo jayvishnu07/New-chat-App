@@ -9,9 +9,13 @@ const UserSchema = mongoose.Schema({
         type: String,
         default: 'https://freesvg.org/img/abstract-user-flat-4.png',
     },
-    token : { type: String}
+    token: { type: String }
 },
-    { timestamps: true }
+    {
+        timestamps: {
+            currentTime: () => new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }),
+        }
+    }
 )
 
 //Creating method to schema to campare password
@@ -20,7 +24,7 @@ const UserSchema = mongoose.Schema({
 // };
 
 //Decrypting the password before saving it to DB
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function (next) {
     if (!this.isModified) {
         console.log('this.isModified', this.isModified);
         console.log('this', this);
@@ -30,7 +34,7 @@ UserSchema.pre('save', async function(next) {
 
     //DECRYPTION
     const salt = await bcrypt.genSalt(10);
-    this.password =  await bcrypt.hash(this.password, salt);
+    this.password = await bcrypt.hash(this.password, salt);
     console.log(this.password);
 })
 

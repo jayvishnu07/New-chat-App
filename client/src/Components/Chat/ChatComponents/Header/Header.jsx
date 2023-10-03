@@ -257,7 +257,7 @@ const Header = () => {
         <div className="chat-component-header">
             <div className="left-header-features-wrapper">
                 <div className="user-profile">
-                    <img src={logo} id='cursor' alt="Logo" width={"70px"} />
+                    <img src={logo} id='cursor' alt="Logo" width={"50px"} />
                 </div>
                 <div className="left-header-features">
                     <FaUserFriends size={25} id='cursor' onClick={() => setShowSearchFriends(true)} />
@@ -327,10 +327,11 @@ const Header = () => {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-                    <div>
+                    <div onClick={() => { setNotification([]) }} >
                         <NotificationBadge count={notification.length} effect={Effect.SCALE} />
                         <MdNotifications size={25} id='cursor' />
                     </div>
+
 
 
                 </div>
