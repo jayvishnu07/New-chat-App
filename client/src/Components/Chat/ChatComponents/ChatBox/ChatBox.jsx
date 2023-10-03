@@ -2,15 +2,14 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
 import { BsSearch } from 'react-icons/bs';
-import { GiMagicHat } from 'react-icons/gi';
 import { StageSpinner } from 'react-spinners-kit';
 import { toast } from 'react-toastify';
 import io from "socket.io-client";
 import { EntireChatState } from '../../../../ContextAPI/chatContext';
 import UserDetailsSidebar from '../../../UserDetailsSidebar/UserDetailsSidebar';
+import logo from '../.././../../assets/Group-31.svg';
 import './ChatBox.css';
 import SingleChat from './SingleChat';
-
 
 const ENDPOINT = "http://localhost:8080";
 var socket, selectedChatCompare;
@@ -236,7 +235,7 @@ const ChatBox = () => {
                     <div className="new-friends-list-item">
                       {res.isGroupChat ? res.chatName : getSender(res.users)?.name}
                       <br />
-                      <div className='latest-msg-div' >{res?.recentMessage?.textMessage}</div>
+                      <div className='latest-msg-div' >{`~ : ${res?.recentMessage?.textMessage ? res?.recentMessage?.textMessage : 'No messages'}`}</div>
                     </div>
                   </div>
                   <div className="friends-list-item-bottom-border"></div>
@@ -276,7 +275,7 @@ const ChatBox = () => {
         {showFriendDetail && <UserDetailsSidebar user chatInfo={selectedChat.users ? (!selectedChat.isGroupChat) ? getSender(selectedChat.users) : selectedChat : selectedChat} setShowFriendDetail={setShowFriendDetail} />}
       </div>
       <div className={!selectedChat._id ? 'no-chat-notify' : 'none'} >
-        <GiMagicHat size={50} />
+        <img src={logo} id='cursor' alt="Logo" width={"120px"} />
         <h4>Select any chat to message . . . !</h4>
         <span>In the past, before phones and the Internet, all communication was face-to-face. Now, most of it is digital, via emails and messaging services. If people were to start using virtual reality, it would almost come full circle.</span>
       </div>

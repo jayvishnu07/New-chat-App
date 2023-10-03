@@ -44,8 +44,9 @@
 
 .application-name {
     cursor: pointer;
-    font-family: 'Cinzel', serif !important;
+    font-family: Montserrat;
     font-size: 20px;
+    font-weight: 900;
 }
 
 .setting-and-profile-feature {

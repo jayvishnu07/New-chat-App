@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BsFillChatRightTextFill, BsSearch } from 'react-icons/bs';
 import { FaUserFriends } from 'react-icons/fa';
-import { GiMagicHat } from 'react-icons/gi';
 import { IoMdClose } from 'react-icons/io';
 import { MdNotifications, MdOutlineDriveFileRenameOutline } from 'react-icons/md';
 import './Header.css';
@@ -18,7 +17,8 @@ import { EntireChatState } from '../../../../ContextAPI/chatContext';
 import SearchNewFriends from '../../SearchNewFriends';
 
 import NotificationBadge, { Effect } from 'react-notification-badge';
-
+// import logo from '../../../../assets/Light - 1.svg';
+import logo from '../../../../assets/Group-31.svg';
 
 const Header = () => {
     const [searchInput, setSearchInput] = useState('')
@@ -84,6 +84,7 @@ const Header = () => {
         }
         try {
             if (searchInput) {
+                console.log("keyword", searchInput);
                 const { data } = await axios.get(`http://localhost:8080/user/search-new-friends?search=${searchInput}`, config)
                 setNewFriends(data)
             }
@@ -256,7 +257,7 @@ const Header = () => {
         <div className="chat-component-header">
             <div className="left-header-features-wrapper">
                 <div className="user-profile">
-                    <GiMagicHat size={30} id='cursor' />
+                    <img src={logo} id='cursor' alt="Logo" width={"70px"} />
                 </div>
                 <div className="left-header-features">
                     <FaUserFriends size={25} id='cursor' onClick={() => setShowSearchFriends(true)} />
@@ -336,7 +337,7 @@ const Header = () => {
             </div>
             <div className="righ-header-features-wrapper">
                 <div className="application-name">
-                    Magic Hat
+                    Work<span style={{ color: "red" }} >S</span>ync
                 </div>
                 <div className="setting-and-profile-feature">
                     <img id='cursor' src={profilePic} alt="proflie" onClick={handleShow} />

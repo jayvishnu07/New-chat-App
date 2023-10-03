@@ -24,9 +24,12 @@ const SingleChat = ({ messages }) => {
                 marginLeft: isSameSenderMargin(messages, m, i, user.id),
                 marginTop: isSameUser(messages, m, i, user.id) ? 3 : 10,
                 borderRadius: "5px",
-                padding: "5px 15px",
+                padding: "5px 10px 10px 15px",
                 maxWidth: "75%",
                 color: "#fff",
+                fontWeight: "600",
+                userSelect: 'text',
+                clipPath: user.id == m.sender._id ? `polygon(0% 0%, 100% 0%, 100% 75%, 100% 99.5%, 95% 90%, 0% 89.5%, 0.1% 89.3%)` : `polygon(0% 0%, 100% 0%, 99.9% 90.3%, 5.6% 89%, 0% 100%, 0% 100%, 0.3% 75.3%)`
               }}
             >
               {m.textMessage}
