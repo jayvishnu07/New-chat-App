@@ -31,7 +31,7 @@ const getChat = async (req, res) => {
             select: 'name mail_id profilePic'
         })
 
-        Chat = await User.populate(isChat, {
+        chat = await UserModel.populate(chat, {
             path: "latestMessage.sender",
             select: "name profilePic mail_id",
         });
