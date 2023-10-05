@@ -1,8 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Home from './Components/Home';
+import './App.css';
 import Chat from './Components/Chat/Chat';
 import Form from './Components/Form/Form';
 import ChatContextProvider from './ContextAPI/chatContext';
@@ -12,9 +11,8 @@ function App() {
       <BrowserRouter>
         <ChatContextProvider>
           <Routes>
-            <Route path='/' element={<Home />} />
             <Route path='/chats' element={<Chat />} />
-            <Route path='/auth' element={<Form />} />
+            <Route path='/' element={<Form />} />
           </Routes>
         </ChatContextProvider>
       </BrowserRouter>

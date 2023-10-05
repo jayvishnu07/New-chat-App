@@ -154,6 +154,15 @@ const ChatBox = () => {
     }
   };
 
+  const handleSelectedChat = (res) => {
+    setSelectedChat(res)
+    const stringified = JSON.stringify(res)
+    localStorage.setItem('selectedChat', stringified)
+  }
+
+  useEffect(() => {
+    setSelectedChat(JSON.parse(localStorage.getItem('selectedChat')))
+  }, [])
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -215,6 +224,8 @@ const ChatBox = () => {
   }, [selectedChat])
 
 
+
+
   return (
     <div className='chat-body-main-div' >
       <div className="friends-list-main-wrapper">
@@ -229,7 +240,7 @@ const ChatBox = () => {
             currentChat &&
             currentChat.map((res, key) => {
               return (
-                <div key={key} id='cursor' onClick={() => setSelectedChat(res)} className={res._id === selectedChat._id ? 'friends-list-wrapper-selected' : 'friends-list-wrapper'}>
+                <div key={key} id='cursor' onClick={() => handleSelectedChat(res)} className={res._id === selectedChat._id ? 'friends-list-wrapper-selected' : 'friends-list-wrapper'}>
                   <div className="new-friends-list-item-wrapper-main"  >
                     <img id='cursor' src={res.isGroupChat ? res.groupProfile : getSender(res.users)?.profilePic} className='new-friends-list-profile' alt="proflie" />
                     <div className="new-friends-list-item">

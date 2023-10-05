@@ -52,7 +52,7 @@ const Header = () => {
     const handleLogout = () => {
         localStorage.removeItem('userInfo');
         localStorage.removeItem('userToken');
-        navigate('/auth')
+        navigate('/')
         toast.success('🦄 Logout Successful!', {
             position: "top-center",
             autoClose: 2000,

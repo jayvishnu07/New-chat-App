@@ -6,13 +6,14 @@ const chatContext = createContext();
 const ChatContextProvider = ({ children }) => {
     const navigate = useNavigate()
     const [user, setUser] = useState({});
-    const [selectedChat, setSelectedChat] = useState({});
+    const [selectedChat, setSelectedChat] = useState([]);
     const [currentChat, setCurrentChat] = useState([]);
     const [notification, setNotification] = useState([]);
     const [fetchAgain, setFetchAgain] = useState(false);
     useEffect(() => {
-        if (!user) { navigate('/auth') }
+        if (!user) { navigate('/') }
     }, [navigate])
+
 
 
     return (
@@ -23,6 +24,5 @@ const ChatContextProvider = ({ children }) => {
 export const EntireChatState = () => {
     return useContext(chatContext);
 }
-
 
 export default ChatContextProvider;
