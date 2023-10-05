@@ -16,7 +16,6 @@ const Register = () => {
   }
   const [data, setData] = useState(initialState);
   const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [profilePic, setProfilePic] = useState();
   const [loading, setLoading] = useState(false)
   const [picLoading, setPicLoading] = useState(false)
@@ -81,7 +80,7 @@ const Register = () => {
 
   const signUp = e => {
     e.preventDefault();
-    const { name, mail_id, password, confirmPassword } = data;
+    const { name, mail_id, password } = data;
     if (!name || !mail_id || !password) {
       toast.warn('🦄 Please fill out all the fields.', {
         position: "top-center",
@@ -94,20 +93,7 @@ const Register = () => {
         theme: "dark",
       });
       return;
-    }
-
-    if (password !== confirmPassword) {
-      toast.warn('🦄 Password is missmatching', {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      return;
+    
     }
 
 
@@ -157,11 +143,6 @@ const Register = () => {
         <span className="password-input-wrapper password-input-div">
           <input onChange={onChangeHandler} className='register-form-input' name='password' type={showPassword ? 'text' : 'password'} placeholder='Password' />
           <i className={showPassword ? "fa fa-eye" : "fa fa-eye-slash"} onClick={() => { setShowPassword((prev) => !prev) }} id="togglePassword"></i>
-        </span>
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <span className="password-input-wrapper password-input-div">
-          <input onChange={onChangeHandler} className='register-form-input' name='confirmPassword' type={showConfirmPassword ? 'text' : 'password'} placeholder='ConfirmPassword' />
-          <i className={showConfirmPassword ? "fa fa-eye" : "fa fa-eye-slash"} onClick={() => { setShowConfirmPassword((prev) => !prev) }} id="togglePassword"></i>
         </span>
         <label htmlFor="profilePic" id='uploading-animaation' >Upload Profile {picLoading && <ScaleLoader height={10} />} </label>
         <input onChange={(e) => profilePicHandler(e.target.files[0])} className='register-form-input-file' name='profilePic' type="file" />
