@@ -136,11 +136,12 @@
     padding: 0px 10px;
     border-radius: 5px;
     border: none;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .new-chat-form-input-file {
     padding: 10px;
+    font-weight: 600;
 }
 
 .new-chat-form-input-file::-webkit-file-upload-button {

@@ -206,7 +206,8 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
                 }
             }
             const { data } = await axios.post(`http://localhost:8080/api/get-message`, { oppositeUserId }, config)
-            setSelectedChat(...data)
+            console.log("hhh",data);
+            setSelectedChat(data)
         } catch (error) {
             //toast            
             console.log(error.message);
