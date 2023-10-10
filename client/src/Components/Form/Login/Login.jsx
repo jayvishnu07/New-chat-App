@@ -77,7 +77,7 @@ const Login = () => {
       <span className='login-main-title' >Sign-In</span>
       <div className="login-form-input-div">
         <label htmlFor="mail_id">Email-ID</label>
-        <input onChange={(e) => setEmail(e.target.value)} className='login-form-input' name='mail_id' type="text" placeholder='Mail-ID' />
+        <input onChange={(e) => setEmail(e.target.value)} className='login-form-input' name='mail_id' type="text" placeholder='johndeo@gmail.com' />
         <label htmlFor="password">Password</label>
         <span className="password-input-wrapper password-input-div  ">
           <input onChange={(e) => setPassword(e.target.value)} className='login-form-input' name='password' type={showPassword ? 'text' : 'password'} placeholder='Password' />

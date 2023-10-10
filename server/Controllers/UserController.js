@@ -33,7 +33,6 @@ const registerUser = async (req, res) => {
             createdAt: user.createdAt,
             token: getJwtToken(user._id)
         });
-        console.log(user);
     }
     else {
         res.status(400).send('User is not Created.');
@@ -42,7 +41,6 @@ const registerUser = async (req, res) => {
 
 const comaparePassword = async function (mail_id, enteredPassword) {
     const user = await UserModel.findOne({ mail_id });
-    console.log(enteredPassword, user.password);
     return await bcrypt.compare(enteredPassword, user.password);
 };
 
@@ -60,7 +58,6 @@ const loginUser = async (req, res) => {
             createdAt: user.createdAt,
             token: getJwtToken(user._id)
         });
-        console.log("user = >", user._id);
     }
     else {
         res.status(400).send('Incorrect Mail ID or Password.')
@@ -82,7 +79,6 @@ const searchNewFriends = async (req, res) => {
             })
                 .find({ _id: { $ne: req.currentUser.id } })
 
-            console.log('keyword', user);
             res.status(200).send(user)
         }
     } catch (error) {

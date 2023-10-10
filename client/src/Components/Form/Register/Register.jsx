@@ -54,7 +54,6 @@ const Register = () => {
         .then((res) => res.json())
         .then((data) => {
           setProfilePic(data.url.toString());
-          console.log(data.url.toString());
           setPicLoading(false);
         })
         .catch((err) => {
@@ -75,7 +74,6 @@ const Register = () => {
       setPicLoading(false);
       return;
     }
-    console.log(profilePic);
   }
 
   const signUp = e => {
@@ -136,9 +134,9 @@ const Register = () => {
       <span className='register-main-title' >Sign-Up</span>
       <div className="register-form-input-div">
         <label htmlFor="name">Name</label>
-        <input onChange={onChangeHandler} className='register-form-input' name='name' type="text" placeholder='Name' />
+        <input onChange={onChangeHandler} className='register-form-input' name='name' type="text" placeholder='John Deo' />
         <label htmlFor="mail_id">Mail-ID</label>
-        <input onChange={onChangeHandler} className='register-form-input' name='mail_id' type="text" placeholder='Mail-ID' />
+        <input onChange={onChangeHandler} className='register-form-input' name='mail_id' type="text" placeholder='johndeo@gmail.com' />
         <label htmlFor="password">Password</label>
         <span className="password-input-wrapper password-input-div">
           <input onChange={onChangeHandler} className='register-form-input' name='password' type={showPassword ? 'text' : 'password'} placeholder='Password' />

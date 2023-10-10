@@ -65,9 +65,7 @@ const Header = () => {
         });
     }
 
-    useEffect(() => {
-        console.log(token);
-    })
+
 
     const onclose = () => {
         setShowSearchFriends(false);
@@ -84,7 +82,6 @@ const Header = () => {
         }
         try {
             if (searchInput) {
-                console.log("keyword", searchInput);
                 const { data } = await axios.get(`http://localhost:8080/user/search-new-friends?search=${searchInput}`, config)
                 setNewFriends(data)
             }
@@ -152,7 +149,6 @@ const Header = () => {
                 .then((res) => res.json())
                 .then((data) => {
                     setGroupProfilePic(data.url.toString());
-                    console.log(data.url.toString());
                     setPicLoading(false);
                 })
                 .catch((err) => {
@@ -172,7 +168,6 @@ const Header = () => {
             setPicLoading(false);
             return;
         }
-        console.log(pic);
     }
 
     const createGroupChat = async () => {

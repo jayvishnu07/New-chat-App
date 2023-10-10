@@ -22,8 +22,9 @@ const SingleChat = ({ messages }) => {
   return (
     <div className='main-content'  >
       {messages &&
-        messages.map((m, i) => (
-          <div className='chat-display-item' key={m.id}>
+        messages.map((m, i) => {
+          return(
+          <div className='chat-display-item' key={i}>
             {(isSameSender(messages, m, i, user.id) ||
               isLastMessage(messages, i, user.id)) && (
                 <img id='cursor' style={{ width: "35px", height: "35px", borderRadius: "50%" }} src={m.sender.profilePic} alt="proflie" />
@@ -61,7 +62,10 @@ const SingleChat = ({ messages }) => {
               </span>
             </span>
           </div>
-        ))
+          )
+
+        }
+        )
       }
     </div >
   )

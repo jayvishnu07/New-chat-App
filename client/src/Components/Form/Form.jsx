@@ -16,7 +16,7 @@ const Form = () => {
           <button className='form-toggle-btn' style={
             isSignIn
               ? {
-                backgroundColor: "rgba(0, 0, 0, 0.952)",
+                backgroundColor: "#2A2438",
                 color: "white",
                 transition: ".5 s",
               }
@@ -29,7 +29,7 @@ const Form = () => {
             isSignIn
               ? { backgroundColor: "white" }
               : {
-                backgroundColor: "rgba(3, 3, 3, 0.952)",
+                backgroundColor: "#2A2438",
                 color: "white",
                 transition: ".5 s",
               }

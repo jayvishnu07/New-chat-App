@@ -26,16 +26,11 @@ const UserSchema = mongoose.Schema({
 //Decrypting the password before saving it to DB
 UserSchema.pre('save', async function (next) {
     if (!this.isModified) {
-        console.log('this.isModified', this.isModified);
-        console.log('this', this);
         next();
     }
-    console.log('below this', this);
-
     //DECRYPTION
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
-    console.log(this.password);
 })
 
 const UserModel = mongoose.model('User', UserSchema);

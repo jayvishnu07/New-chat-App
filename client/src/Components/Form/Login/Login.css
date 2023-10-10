@@ -12,7 +12,7 @@
 .login-main-title {
     color: white;
     font-size: 30px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .login-google-button {
@@ -28,6 +28,10 @@
     cursor: pointer;
 }
 
+.login-form-input-div label{
+    font-weight: 600;
+    color: #f2f2f2;
+}
 
 .login-google-icon {
     background-color: white;
@@ -51,7 +55,7 @@
     justify-content: center;
     width: 100%;
     color: white;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .login-form-input-div {
@@ -65,12 +69,13 @@
     margin: 5px 0 15px 0;
     border-radius: 30px;
     border: none;
-    background-color: #d3e4f1;
+    background-color: #f2f2f2;
     width: 350px;
     height: 35px;
     outline: none;
     box-sizing: border-box;
     padding: 10px;
+    font-weight: 500;
 }
 
 #togglePassword {
@@ -106,24 +111,24 @@
 
 .login-remember-txt {
     margin: 0 0 0 10px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .login-forgot-txt {
-    color: blue;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
 
 }
 
 .login-submit-btn {
     padding: 10px 20px 10px 20px;
-    width: 150px;
-    background-color: black;
+    width: 120px;
+    background-color: #2A2438;
     color: white;
-    font-weight: bold;
-    border-radius: 20px;
+    font-weight: 600;
+    border-radius: 25px;
     cursor: pointer;
+    border: none;
 }
 
 @media only screen and (max-width:500px) {

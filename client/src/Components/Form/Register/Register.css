@@ -1,3 +1,9 @@
+/* background-color: #2A2438;
+background-color: #352F44;
+background-color: #5C5470;
+background-color: #f2f2f2; */
+
+
 .register-container {
     margin: 20px 0 0 0;
     display: flex;
@@ -12,7 +18,7 @@
 .register-main-title {
     color: white;
     font-size: 30px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .register-google-button {
@@ -51,7 +57,7 @@
     justify-content: center;
     width: 100%;
     color: white;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .register-form-input-div {
@@ -65,7 +71,7 @@
     margin: 5px 0 15px 0;
     border-radius: 30px;
     border: none;
-    background-color: #d3e4f1;
+    background-color: #f2f2f2;
     width: 350px;
     height: 35px;
     outline: none;
@@ -99,26 +105,14 @@
     white-space: nowrap;
     user-select: none;
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 10pt;
 }
 
-.register-form-input-file:hover::before {
-    border-color: black;
-}
-
-.register-form-input-file:active::before {
-    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-}
-
-.register-form-input:active {
-    transform: scale(.98);
-
-}
 
 .register-term-txt {
     margin: 0 0 0 10px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 #uploading-animaation{
@@ -131,14 +125,27 @@
 
 .register-submit-btn {
     padding: 10px 20px 10px 20px;
-    width: 150px;
-    background-color: black;
+    width: 120px;
+    background-color: #2A2438;
     color: white;
-    font-weight: bold;
-    border-radius: 20px;
+    font-weight: 600;
+    border-radius: 25px;
     cursor: pointer;
+    border: none;
 }
+.register-form-input-div label{
+    font-weight: 600;
+    color: #f2f2f2;
+}
+.register-form-input{
+    font-weight: 500;
+}
+.register-form-input-file{
+    font-weight: 500;
+    color: #f2f2f2;
 
+
+}
 @media only screen and (max-width:500px) {
     .register-container {
         height: 400px;
@@ -173,12 +180,14 @@
 
     }
 
+
+
     .register-submit-btn {
         padding: 10px 20px 10px 20px;
         width: 150px;
         background-color: black;
         color: white;
-        font-weight: bold;
+        font-weight: 600;
         border-radius: 20px;
         cursor: pointer;
     }

@@ -1,10 +1,8 @@
+
 .form-container-main {
     height: 100vh;
     width: 100%;
-    background: #e2a9e5;
-    background: -moz-linear-gradient(-45deg, #e2a9e5 15%, #2b94e5 100%);
-    background: -webkit-linear-gradient(-45deg, #e2a9e5 15%, #2b94e5 100%);
-    background: linear-gradient(135deg, #e2a9e5 15%, #2b94e5 100%);
+   background-color: #f2f2f2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,7 +11,7 @@
 .form-container {
     width: 500px;
     height: 600px;
-    background: linear-gradient(135deg, #e2a9e5 15%, #2b94e5 100%);
+    background: #5C5470;
     box-shadow: 0px 14px 28px rgba(0, 0, 0, .25), 0px 10px 20px rgba(0, 0, 0, .22);
     border-radius: 10px;
     display: flex;
@@ -34,8 +32,7 @@
     width: 120px;
     height: 40px;
     font-size: 15px;
-    font-weight: bold;
-    background-color: blue;
+    font-weight: 600;
     border: none;
     border-radius: 20px;
     cursor: pointer;

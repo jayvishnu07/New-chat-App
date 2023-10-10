@@ -113,7 +113,6 @@ const ChatBox = () => {
     if (atIndex !== -1) {
       const remainingText = value.slice(atIndex + 1);
       firstWord = remainingText.split(' ')[0];
-      console.log("firstWord ",firstWord);
       try {
         const config = {
           headers: {
@@ -126,7 +125,6 @@ const ChatBox = () => {
           `http://localhost:8081/api/v1/suggestions?text=${firstWord}`,
           config
         );
-        console.log("log from NLP ",data);
         setNlpArray(data)
       } catch (error) {
         toast({
@@ -162,8 +160,7 @@ const ChatBox = () => {
 
 
   const fetchMessages = async () => {
-    if (!selectedChat) return;
-
+    if (!selectedChat._id) return;
     try {
       const config = {
         headers: {
@@ -224,7 +221,10 @@ const ChatBox = () => {
   }, []);
 
   useEffect(() => {
-    fetchMessages();
+    if(selectedChat?._id){
+      fetchMessages();
+
+    }
 
     selectedChatCompare = selectedChat;
     // eslint-disable-next-line
@@ -254,7 +254,6 @@ const ChatBox = () => {
 
       // Scroll to the bottom with extra scroll
       messagesRef.current.scrollTop = messagesRef.current.scrollHeight + additionalScroll;
-      console.log("additionalScroll", additionalScroll);
     }
   }, [messages, typing]);
 
@@ -265,7 +264,7 @@ const ChatBox = () => {
   }, [selectedChat, user])
 
   useEffect(() => {
-    if (selectedChat) {
+    if (selectedChat?._id) {
       fetchMessages();
     }
   }, [selectedChat])
@@ -325,9 +324,7 @@ const ChatBox = () => {
             {
               nlpArray.map((obj,key)=>{
                 return(
-
                 <div className="suggestions-item" key={key} onClick={()=>{changeWithRegularExpression(obj)}} >
-                  {console.log(obj)}
                   {`${obj.answer}`}
                 </div>
                 )

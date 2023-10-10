@@ -39,7 +39,6 @@ manager.addAnswer('en', 'greetings.hello', 'Greetings!');
 app.post("/api/v1/suggestions", async (req, res)=>{
     const response = await manager.process('en', req.query.text);
     res.send(response.answers)
-    console.log(response);
 })
 
 app.listen(8081, (err)=>{

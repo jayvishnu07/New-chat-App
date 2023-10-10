@@ -76,7 +76,6 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
                 .then((res) => res.json())
                 .then((data) => {
                     setGroupProfilePic(data.url.toString());
-                    console.log(data.url.toString());
                     setPicLoading(false);
                 })
                 .catch((err) => {
@@ -97,7 +96,6 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
             setPicLoading(false);
             return;
         }
-        console.log(pic);
     }
 
     const searchNewFriendHandler = async () => {
@@ -209,7 +207,6 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
             }
             const { data } = await axios.post(`http://localhost:8080/api/get-message`, { oppositeUserId }, config)
             setSelectedChat(...data)
-            console.log(...data);
         } catch (error) {
             //toast            
             console.log(error.message);

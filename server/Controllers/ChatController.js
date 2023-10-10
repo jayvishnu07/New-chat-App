@@ -3,7 +3,6 @@ const UserModel = require("../Models/UserModel");
 
 const getChat = async (req, res) => {
     const { oppositeUserId } = req.body;
-    console.log(oppositeUserId, 'kicking');
 
     if (!oppositeUserId) {
         console.log("id not given");
@@ -23,7 +22,6 @@ const getChat = async (req, res) => {
         .populate('users', '-password')
         .populate('recentMessage')
 
-    console.log('chat.length', chat);
     if (chat) {
 
         chat = await UserModel.populate(chat, {
@@ -35,15 +33,12 @@ const getChat = async (req, res) => {
             path: "latestMessage.sender",
             select: "name profilePic mail_id",
         });
-        console.log('chat.length', chat.length);
         if (chat.length > 0) {
             return res.status(200).send(chat[0])
         }
     }
 
 
-    console.log(req.currentUser.id);
-    console.log(oppositeUserId);
     try {
         const createdChat = await ChatModel.create({
             chatName: 'Direct Chat',
@@ -200,7 +195,6 @@ const editChatMembers = async (req, res) => {
         if (!group) {
             return res.status(404).send("Group Not Found")
         }
-        console.log('Edited group', group);
         res.status(200).send(group)
 
     } catch (error) {
@@ -248,7 +242,6 @@ const deleteGroup = async (req, res) => {
     if (!group) {
         return res.status(404).send("Group Not Found")
     }
-    console.log('deleted group', group);
     res.status(200).send(group)
 }
 
