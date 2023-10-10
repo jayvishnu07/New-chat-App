@@ -30,14 +30,18 @@ const ChatBox = () => {
   const [istyping, setIsTyping] = useState(false);
   const [extraScroll, setExtraScroll] = useState(0);
 
+  const [nlpArray,setNlpArray] = useState([])
+  const [selectedFromNLP,setSelectedFromNLP] = useState('')
+
   const messagesRef = useRef(null);
+  const inputRef = useRef(null)
 
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('userInfo')))
   }, [])
 
-  const { id, name, mail_id, profilePic, } = user;
+  const { id } = user;
 
 
   const getAllChats = async () => {
@@ -99,8 +103,44 @@ const ChatBox = () => {
       });
     }
   }
-  const handleNewMessage = (e) => {
+  const handleNewMessage = async(e) => {
     setNewMessage(e.target.value)
+    let value = e.target.value;
+    let firstWord;
+
+    const atIndex = value.indexOf('@');
+
+    if (atIndex !== -1) {
+      const remainingText = value.slice(atIndex + 1);
+      firstWord = remainingText.split(' ')[0];
+      console.log("firstWord ",firstWord);
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        //have a look here
+        const {data} = await axios.post(
+          `http://localhost:8081/api/v1/suggestions?text=${firstWord}`,
+          config
+        );
+        console.log("log from NLP ",data);
+        setNlpArray(data)
+      } catch (error) {
+        toast({
+          title: "Error Occured!",
+          description: "Failed to send the Message",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+          position: "bottom",
+        });
+      }
+    } else {
+    }
+
 
     if (!socketConnected) return;
 
@@ -160,6 +200,15 @@ const ChatBox = () => {
     localStorage.setItem('selectedChat', stringified)
   }
 
+  const changeWithRegularExpression = (obj)=>{
+    setSelectedFromNLP(obj.answer)
+    setNewMessage((prevMessage)=>{
+      return newMessage.replace(/@(\w+)/g, obj.answer)
+    })
+    inputRef.current.focus();
+    setNlpArray([])
+  }
+
   useEffect(() => {
     setSelectedChat(JSON.parse(localStorage.getItem('selectedChat')))
   }, [])
@@ -183,13 +232,11 @@ const ChatBox = () => {
 
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
-      console.log("newMessageRecieved", newMessageRecieved);
       if (
-        !selectedChatCompare || // if chat is not selected or doesn't match current chat
+        !selectedChatCompare || 
         selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
         if (!notification.includes(newMessageRecieved)) {
-          console.log("notification");
           setNotification([newMessageRecieved, ...notification]);
           setFetchAgain(!fetchAgain);
         }
@@ -240,7 +287,7 @@ const ChatBox = () => {
             currentChat &&
             currentChat.map((res, key) => {
               return (
-                <div key={key} id='cursor' onClick={() => handleSelectedChat(res)} className={res._id === selectedChat._id ? 'friends-list-wrapper-selected' : 'friends-list-wrapper'}>
+                <div key={key} id='cursor' onClick={() => handleSelectedChat(res)} className={res._id === selectedChat?._id ? 'friends-list-wrapper-selected' : 'friends-list-wrapper'}>
                   <div className="new-friends-list-item-wrapper-main"  >
                     <img id='cursor' src={res.isGroupChat ? res.groupProfile : getSender(res.users)?.profilePic} className='new-friends-list-profile' alt="proflie" />
                     <div className="new-friends-list-item">
@@ -261,7 +308,7 @@ const ChatBox = () => {
 
       {/* chat box  */}
 
-      <div className={selectedChat._id ? "chat-and-user-detail-wrapper-main" : 'none'}>
+      <div className={selectedChat?._id ? "chat-and-user-detail-wrapper-main" : 'none'}>
         <div className="chat-box-main-div">
           <div className="fellow-user-details-header" id='cursor' onClick={() => { setShowFriendDetail(prev => !prev) }} >
             <div className="chat-box-feature-left">
@@ -274,9 +321,24 @@ const ChatBox = () => {
             <SingleChat messages={messages} />
             {istyping && <div className='typing-div' ><StageSpinner size={50} color="#2A2438" /></div>}
           </div>
-          <div className="chat-box-input-wrapper">
+          <div className="suggestions">
+            {
+              nlpArray.map((obj,key)=>{
+                return(
+
+                <div className="suggestions-item" key={key} onClick={()=>{changeWithRegularExpression(obj)}} >
+                  {console.log(obj)}
+                  {`${obj.answer}`}
+                </div>
+                )
+
+              })
+            }
+          </div>
+
+          <div className="chat-box-input-wrapper">  
             <div className="chat-box-input-box">
-              <input type="text" onChange={handleNewMessage} value={newMessage} onKeyDown={(e) => { e.key == "Enter" && handleSendMessage() }} placeholder='Type your message here . . .' />
+              <input type="text" onChange={handleNewMessage} value={newMessage} ref={inputRef} onKeyDown={(e) => { e.key == "Enter" && handleSendMessage() }} placeholder='Type your message here . . .' />
               <div className="send-logo-div" onClick={handleSendMessage} >
                 send
                 <AiOutlineSend size={30} fill='#fff' />
@@ -284,9 +346,9 @@ const ChatBox = () => {
             </div>
           </div>
         </div>
-        {showFriendDetail && <UserDetailsSidebar user chatInfo={selectedChat.users ? (!selectedChat.isGroupChat) ? getSender(selectedChat.users) : selectedChat : selectedChat} setShowFriendDetail={setShowFriendDetail} />}
+        {showFriendDetail && <UserDetailsSidebar user chatInfo={selectedChat?.users ? (!selectedChat?.isGroupChat) ? getSender(selectedChat?.users) : selectedChat : selectedChat} setShowFriendDetail={setShowFriendDetail} />}
       </div>
-      <div className={!selectedChat._id ? 'no-chat-notify' : 'none'} >
+      <div className={!selectedChat?._id ? 'no-chat-notify' : 'none'} >
         <img src={logo} id='cursor' alt="Logo" width={"120px"} />
         <h4>Select any chat to message . . . !</h4>
         <span>In the past, before phones and the Internet, all communication was face-to-face. Now, most of it is digital, via emails and messaging services. If people were to start using virtual reality, it would almost come full circle.</span>

@@ -48,7 +48,7 @@ const UserDetailsHeader = ({ setShowFriendDetail }) => {
     const { setSelectedChat, selectedChat, currentChat, setCurrentChat } = EntireChatState()
 
 
-    const { id, name, mail_id, profilePic } = user;
+    const { id } = user;
 
 
     useEffect(() => {

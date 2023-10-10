@@ -29,7 +29,6 @@ const SingleChat = ({ messages }) => {
                 <img id='cursor' style={{ width: "35px", height: "35px", borderRadius: "50%" }} src={m.sender.profilePic} alt="proflie" />
               )}
 
-            {console.log(m)}
             <span
               style={{
                 backgroundColor: `${m.sender._id === user.id ? "#5C5470" : "#302942"

@@ -14,6 +14,10 @@ const ChatContextProvider = ({ children }) => {
         if (!user) { navigate('/') }
     }, [navigate])
 
+    useEffect(()=>{
+        setSelectedChat(JSON.parse(localStorage.getItem('selectedChat')));
+    },[])
+
 
 
     return (

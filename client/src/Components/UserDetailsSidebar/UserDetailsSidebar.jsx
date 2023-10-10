@@ -42,7 +42,7 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
         setUser(JSON.parse(localStorage.getItem('userInfo')))
     }, [])
 
-    const { id, name, mail_id, profilePic } = user;
+    const { id } = user;
 
 
 

@@ -382,3 +382,18 @@
     color: rgb(159, 159, 159);  
     font-weight: 600; 
 }
+
+.suggestions{
+    background-color: #5C5470;
+    width: 100%;
+    
+}
+
+.suggestions-item{
+    padding: 5px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #2A2438;
+}
+.suggestions-item:hover{
+    background-color: #352F44;
+}

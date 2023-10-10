@@ -1,0 +1,393 @@
+{
+  "settings": {
+    "languages": [
+      "en"
+    ],
+    "forceNER": true,
+    "nlu": {
+      "log": false
+    },
+    "tag": "nlp",
+    "threshold": 0.5,
+    "autoLoad": true,
+    "autoSave": true,
+    "modelFileName": "model.nlp",
+    "executeActionsBeforeAnswers": false,
+    "calculateSentiment": true
+  },
+  "nluManager": {
+    "settings": {
+      "tag": "nlu-manager",
+      "log": false
+    },
+    "locales": [
+      "en"
+    ],
+    "languageNames": {},
+    "domainManagers": {
+      "en": {
+        "settings": {
+          "locale": "en",
+          "trainByDomain": false,
+          "tag": "domain-manager-en",
+          "nluByDomain": {
+            "default": {
+              "className": "NeuralNlu",
+              "settings": {}
+            }
+          },
+          "useStemDict": true
+        },
+        "stemDict": {
+          "bye": {
+            "intent": "greetings.bye",
+            "domain": "default"
+          },
+          "byeby": {
+            "intent": "greetings.bye",
+            "domain": "default"
+          },
+          "seeyou": {
+            "intent": "greetings.bye",
+            "domain": "default"
+          },
+          "goodby": {
+            "intent": "greetings.bye",
+            "domain": "default"
+          },
+          "hello": {
+            "intent": "greetings.hello",
+            "domain": "default"
+          },
+          "hellother": {
+            "intent": "greetings.hello",
+            "domain": "default"
+          },
+          "hi": {
+            "intent": "greetings.hello",
+            "domain": "default"
+          },
+          "welcom": {
+            "intent": "greetings.hello",
+            "domain": "default"
+          },
+          "hither": {
+            "intent": "greetings.hello",
+            "domain": "default"
+          },
+          "howdi": {
+            "intent": "greetings.hello",
+            "domain": "default"
+          }
+        },
+        "intentDict": {
+          "greetings.bye": "default",
+          "greetings.hello": "default"
+        },
+        "sentences": [
+          {
+            "domain": "default",
+            "utterance": "bye",
+            "intent": "greetings.bye"
+          },
+          {
+            "domain": "default",
+            "utterance": "byebye",
+            "intent": "greetings.bye"
+          },
+          {
+            "domain": "default",
+            "utterance": "seeYou",
+            "intent": "greetings.bye"
+          },
+          {
+            "domain": "default",
+            "utterance": "seeyou",
+            "intent": "greetings.bye"
+          },
+          {
+            "domain": "default",
+            "utterance": "goodBye",
+            "intent": "greetings.bye"
+          },
+          {
+            "domain": "default",
+            "utterance": "goodbye",
+            "intent": "greetings.bye"
+          },
+          {
+            "domain": "default",
+            "utterance": "hello",
+            "intent": "greetings.hello"
+          },
+          {
+            "domain": "default",
+            "utterance": "helloThere",
+            "intent": "greetings.hello"
+          },
+          {
+            "domain": "default",
+            "utterance": "hi",
+            "intent": "greetings.hello"
+          },
+          {
+            "domain": "default",
+            "utterance": "welcome",
+            "intent": "greetings.hello"
+          },
+          {
+            "domain": "default",
+            "utterance": "hithere",
+            "intent": "greetings.hello"
+          },
+          {
+            "domain": "default",
+            "utterance": "hiThere",
+            "intent": "greetings.hello"
+          },
+          {
+            "domain": "default",
+            "utterance": "howdy",
+            "intent": "greetings.hello"
+          }
+        ],
+        "domains": {
+          "master_domain": {
+            "settings": {
+              "locale": "en",
+              "tag": "nlu-en",
+              "keepStopwords": true,
+              "nonefeatureValue": 1,
+              "nonedeltaMultiplier": 1.2,
+              "spellCheck": false,
+              "spellCheckDistance": 1,
+              "filterZeros": true,
+              "log": true
+            },
+            "features": {
+              "bye": 1,
+              "byeby": 1,
+              "seeyou": 1,
+              "goodby": 1,
+              "hello": 1,
+              "hellother": 1,
+              "hi": 1,
+              "welcom": 1,
+              "hither": 1,
+              "howdi": 1
+            },
+            "intents": {
+              "greetings.bye": 1,
+              "greetings.hello": 1
+            },
+            "intentFeatures": {
+              "greetings.bye": {
+                "bye": 1,
+                "byeby": 1,
+                "seeyou": 1,
+                "goodby": 1
+              },
+              "greetings.hello": {
+                "hello": 1,
+                "hellother": 1,
+                "hi": 1,
+                "welcom": 1,
+                "hither": 1,
+                "howdi": 1
+              }
+            },
+            "featuresToIntent": {
+              "bye": [
+                "greetings.bye"
+              ],
+              "byeby": [
+                "greetings.bye"
+              ],
+              "seeyou": [
+                "greetings.bye"
+              ],
+              "goodby": [
+                "greetings.bye"
+              ],
+              "hello": [
+                "greetings.hello"
+              ],
+              "hellother": [
+                "greetings.hello"
+              ],
+              "hi": [
+                "greetings.hello"
+              ],
+              "welcom": [
+                "greetings.hello"
+              ],
+              "hither": [
+                "greetings.hello"
+              ],
+              "howdi": [
+                "greetings.hello"
+              ]
+            },
+            "neuralNetwork": {
+              "settings": {
+                "locale": "en",
+                "tag": "nlu-en",
+                "keepStopwords": true,
+                "nonefeatureValue": 1,
+                "nonedeltaMultiplier": 1.2,
+                "spellCheck": false,
+                "spellCheckDistance": 1,
+                "filterZeros": true
+              },
+              "features": [
+                "bye",
+                "byeby",
+                "seeyou",
+                "goodby",
+                "hello",
+                "hellother",
+                "hi",
+                "welcom",
+                "hither",
+                "howdi"
+              ],
+              "intents": [
+                "greetings.bye",
+                "greetings.hello"
+              ],
+              "perceptrons": [
+                [
+                  9.35568904876709,
+                  9.346973419189453,
+                  9.504444122314453,
+                  9.500335693359375,
+                  -4.723525524139404,
+                  -4.707942008972168,
+                  -4.691461086273193,
+                  -4.67409610748291,
+                  -4.755605220794678,
+                  -4.645837783813477,
+                  4.753922423717812
+                ],
+                [
+                  -6.985316276550293,
+                  -6.953948974609375,
+                  -7.118924140930176,
+                  -7.113678455352783,
+                  7.087846279144287,
+                  7.093593597412109,
+                  7.074038505554199,
+                  7.053211212158203,
+                  7.140366554260254,
+                  7.020031452178955,
+                  7.1499772869744795
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    "intentDomains": {},
+    "extraSentences": [
+      [
+        "en",
+        "bye"
+      ],
+      [
+        "en",
+        "byebye"
+      ],
+      [
+        "en",
+        "seeYou"
+      ],
+      [
+        "en",
+        "seeyou"
+      ],
+      [
+        "en",
+        "goodBye"
+      ],
+      [
+        "en",
+        "goodbye"
+      ],
+      [
+        "en",
+        "hello"
+      ],
+      [
+        "en",
+        "helloThere"
+      ],
+      [
+        "en",
+        "hi"
+      ],
+      [
+        "en",
+        "welcome"
+      ],
+      [
+        "en",
+        "hithere"
+      ],
+      [
+        "en",
+        "hiThere"
+      ],
+      [
+        "en",
+        "howdy"
+      ]
+    ]
+  },
+  "ner": {
+    "settings": {
+      "tag": "ner",
+      "entityPreffix": "%",
+      "entitySuffix": "%"
+    },
+    "rules": {}
+  },
+  "nlgManager": {
+    "settings": {
+      "tag": "nlg-manager"
+    },
+    "responses": {
+      "en": {
+        "greetings.bye": [
+          {
+            "answer": "see you later"
+          },
+          {
+            "answer": "see you soon!"
+          },
+          {
+            "answer": "Catch you later"
+          },
+          {
+            "answer": "Stay safe"
+          }
+        ],
+        "greetings.hello": [
+          {
+            "answer": "Hey there!"
+          },
+          {
+            "answer": "Greetings!"
+          }
+        ]
+      }
+    }
+  },
+  "actionManager": {
+    "settings": {
+      "tag": "action-manager"
+    },
+    "actions": {}
+  },
+  "slotManager": {}
+}

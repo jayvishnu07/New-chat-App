@@ -69,7 +69,7 @@ const Login = () => {
   }
 
   useEffect(() => {
-    localStorage.getItem('userInfo').length > 1 && navigate('chats')
+    localStorage.getItem('userInfo')?.length > 1 && navigate('chats')
   }, [])
 
   return (
