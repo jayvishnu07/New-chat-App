@@ -238,7 +238,7 @@ const UserDetailsSidebar = ({ setShowFriendDetail, chatInfo }) => {
                     <div className="new-chat-form">
                         <label htmlFor="chatName">Group Name</label>
                         <input onChange={e => { setNewGroupName(e.target.value) }} type="text" placeholder='Group Name...' />
-                        <label htmlFor="profilePic" id='uploading-animaation' >Upload Profile {picLoading && <ScaleLoader height={10} />} </label>
+                        <label style={{fontSize : "600"}} htmlFor="profilePic" id='uploading-animaation' >Upload Profile {picLoading && <ScaleLoader height={10} />} </label>
                         <input onChange={(e) => profilePicHandler(e.target.files[0])} className='new-chat-form-input-file' name='profilePic' type="file" placeholder='ConfirmPassword' />
                     </div>
                     {
